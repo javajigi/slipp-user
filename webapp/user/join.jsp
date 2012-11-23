@@ -4,15 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SLiPP</title>
+<title>SLiPP :: 회원가입</title>
 <link href="/stylesheets/bootstrap.css" rel="stylesheet">
 <link href="/stylesheets/bootstrap-responsive.css" rel="stylesheet">
 <link href="/stylesheets/docs.css" rel="stylesheet">
-<link href="/stylesheets/main.css" rel="stylesheet">
 <style>
-  body {
-    padding-top: 40px;
-  }
+body {
+	padding-top: 43px;
+}
 </style>
 </head>
 <body>
@@ -33,18 +32,28 @@
         </div>
       </div>
     </div>
-	<header class="jumbotron subhead" id="overview">
 	<div class="container">
-		<h1>SLiPP</h1>
-		<p class="lead">Sustaninable Life, Programming, Programmer</p>
-	</div>
-	</header>
-	<div class="container">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span6">
-					<h1>여기에다가 본문을 넣으세요.</h1>
-				</div>
+		<div class="row">
+			<div class="span10">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="inputEmail">사용자 아이디</label>
+						<div class="controls">
+							<input type="text" id="inputUserId" placeholder="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputPassword">Password</label>
+						<div class="controls">
+							<input type="password" id="inputPassword" placeholder="Password">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn">회원가입</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
