@@ -44,6 +44,6 @@ public class SlippAT {
 
 	@After
 	public void teardown() {
-		driver.quit();
+		// driver.quit();
 	}
 }
