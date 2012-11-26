@@ -5,52 +5,48 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SLiPP :: 회원가입</title>
-<link href="/stylesheets/bootstrap.css" rel="stylesheet">
-<link href="/stylesheets/bootstrap-responsive.css" rel="stylesheet">
-<link href="/stylesheets/docs.css" rel="stylesheet">
-<style>
-body {
-	padding-top: 43px;
-}
-</style>
+
+<%@ include file="../commons/_header.jspf"%>
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="/">지속가능한 삶, 프로그래밍, 프로그래머</a>
-          <div class="nav-collapse collapse pull-right">
-            <ul class="nav">
-              <li class="loginBtn"><a href="/user/join.jsp">회원가입</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+	<%@ include file="../commons/_top.jspf"%>
+
 	<div class="container">
 		<div class="row">
-			<div class="span10">
-				<form class="form-horizontal">
+			<div class="span12">
+				<section id="typography">
+				<div class="page-header">
+					<h1>회원가입</h1>
+				</div>
+				<form class="form-horizontal" action="/user/join_action.jsp" method="post">
 					<div class="control-group">
-						<label class="control-label" for="inputEmail">사용자 아이디</label>
+						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
-							<input type="text" id="inputUserId" placeholder="">
+							<input type="text" id="userId" name="userId" placeholder="">
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="inputPassword">Password</label>
+						<label class="control-label" for="password">비밀번호</label>
 						<div class="controls">
-							<input type="password" id="inputPassword" placeholder="Password">
+							<input type="password" id="password" name="password" placeholder="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="name">이름</label>
+						<div class="controls">
+							<input type="text" id="name" name="name" placeholder="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="email">이메일</label>
+						<div class="controls">
+							<input type="text" id="email" name="email" placeholder="">
 						</div>
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<button type="submit" class="btn">회원가입</button>
+							<button type="submit" class="btn btn-primary">회원가입</button>
 						</div>
 					</div>
 				</form>

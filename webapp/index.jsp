@@ -5,40 +5,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SLiPP</title>
-<link href="/stylesheets/bootstrap.css" rel="stylesheet">
-<link href="/stylesheets/bootstrap-responsive.css" rel="stylesheet">
-<link href="/stylesheets/docs.css" rel="stylesheet">
-<link href="/stylesheets/main.css" rel="stylesheet">
-<style>
-  body {
-    padding-top: 40px;
-  }
-</style>
+
+<%@ include file="./commons/_header.jspf" %>
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="/">지속가능한 삶, 프로그래밍, 프로그래머</a>
-          <div class="nav-collapse collapse pull-right">
-            <ul class="nav">
-              <li class="loginBtn"><a href="/user/join.jsp">회원가입</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%@ include file="./commons/_top.jspf" %>
+    
 	<header class="jumbotron subhead" id="overview">
 	<div class="container">
 		<h1>SLiPP</h1>
 		<p class="lead">Sustaninable Life, Programming, Programmer</p>
 	</div>
-	</header>
+	</header>     
+    
 	<div class="container">
 		<div class="container-fluid">
 			<div class="row-fluid">
