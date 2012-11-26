@@ -78,6 +78,8 @@
 				<configuration>
 					<webAppSourceDirectory>${basedir}/webapp</webAppSourceDirectory>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<stopKey>slipp</stopKey>
+					<stopPort>9999</stopPort>					
 					<webApp>
 						<contextPath>/</contextPath>
 					</webApp>
