@@ -6,12 +6,8 @@ import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 
 import org.junit.Test;
-import org.mockito.Mock;
 
 public class UserServiceTest {
-	@Mock
-	private UserDao userDao;
-	
 	@Test
 	public void create_정상() throws Exception {
 		User user = createUser();
