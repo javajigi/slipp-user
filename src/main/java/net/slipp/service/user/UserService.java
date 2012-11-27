@@ -5,7 +5,12 @@ import java.sql.SQLException;
 import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class UserService {
+	private Logger log = LoggerFactory.getLogger(UserService.class);
+	
 	private UserDao userDao;
 
 	public UserService() {}
@@ -15,6 +20,8 @@ public class UserService {
 	}
 
 	public void create(User user) throws SQLException, ExistedUserException {
+		log.debug("user : {}", user);
+		
 		if (userDao == null) {
 			userDao = new UserDao();
 		}
