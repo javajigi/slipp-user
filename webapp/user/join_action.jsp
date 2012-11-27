@@ -20,7 +20,15 @@
 	user.setName(request.getParameter("name"));
 	user.setEmail(request.getParameter("email"));
 	UserService userService = new UserService();
-	userService.create(user);
+	try {
+		userService.create(user);
+	} catch (ExistedUserException e) {
+%>
+	<div class="error">
+		<%= e.getMessage() %>
+	</div>	
+<%		
+	}
 %>
 
 <body>

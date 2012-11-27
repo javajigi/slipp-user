@@ -19,16 +19,40 @@ public class UserAT {
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 	}
-	
+
 	@Test
-	public void index() throws Exception {
-		driver.get("http://localhost:8080");
-		assertThat(driver.getTitle(), is("SLiPP"));
-		
-		driver.findElement(By.linkText("회원가입")).click();
-		assertThat(driver.getTitle(), is("SLiPP :: 회원가입"));
-		
+	public void 정상적인_회원가입() throws Exception {
+		goIndex();
+		goJoin();
 		String userId = "javajigi";
+		join(userId);
+		verifyCompletedJoin(userId);
+	}
+
+	@Test
+	public void 아이디가_존재하는_경우_회원가입() throws Exception {
+		goIndex();
+		goJoin();
+		String userId = "newjavajigi";
+		join(userId);
+		verifyCompletedJoin(userId);
+		
+		goJoin();
+		join(userId);
+		expectedAlreadyExistedErrorMessage(userId);
+	}
+
+	private void expectedAlreadyExistedErrorMessage(String userId) {
+		String actualMessage = driver.findElement(By.cssSelector("div.error")).getText();
+		assertThat(actualMessage, is(userId + "는 이미 존재하는 아이디입니다."));
+	}
+
+	private void verifyCompletedJoin(String userId) {
+		String actualMessage = driver.findElement(By.cssSelector("div.messageForm > p")).getText();
+		assertThat(actualMessage, is(userId + " 계정으로 회원가입 완료되었습니다."));
+	}
+
+	private void join(String userId) {
 		driver.findElement(By.id("userId")).clear();
 		driver.findElement(By.id("userId")).sendKeys(userId);
 		driver.findElement(By.id("password")).clear();
@@ -38,9 +62,16 @@ public class UserAT {
 		driver.findElement(By.id("email")).clear();
 		driver.findElement(By.id("email")).sendKeys("javajigi@gmail.com");
 		driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
+	}
 
-		String actualMessage = driver.findElement(By.cssSelector("div.messageForm > p")).getText();
-		assertThat(actualMessage, is(userId + " 계정으로 회원가입 완료되었습니다."));
+	private void goJoin() {
+		driver.findElement(By.linkText("회원가입")).click();
+		assertThat(driver.getTitle(), is("SLiPP :: 회원가입"));
+	}
+
+	private void goIndex() {
+		driver.get("http://localhost:8080");
+		assertThat(driver.getTitle(), is("SLiPP"));
 	}
 
 	@After
