@@ -6,12 +6,8 @@ import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
-
-@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 	@Mock
 	private UserDao userDao;

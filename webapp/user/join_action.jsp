@@ -11,7 +11,12 @@
 <%@ include file="../commons/_header.jspf"%>
 
 </head>
+<body>
+	<%@ include file="../commons/_top.jspf"%>
 
+	<div class="container">
+		<div class="row">
+			<div class="span12">
 <%
 	User user = new User();
 	String userId = request.getParameter("userId");
@@ -22,21 +27,7 @@
 	UserService userService = new UserService();
 	try {
 		userService.create(user);
-	} catch (ExistedUserException e) {
 %>
-	<div class="error">
-		<%= e.getMessage() %>
-	</div>	
-<%		
-	}
-%>
-
-<body>
-	<%@ include file="../commons/_top.jspf"%>
-
-	<div class="container">
-		<div class="row">
-			<div class="span12">
 				<section id="typography">
 				<div class="page-header">
 					<h1>회원가입</h1>
@@ -44,6 +35,15 @@
 				<div class="messageForm">
 					<p><%= userId %> 계정으로 회원가입 완료되었습니다.</p>
 				</div>
+<%		
+	} catch (ExistedUserException e) {
+%>
+				<div class="error">
+					<%= e.getMessage() %>
+				</div>	
+<%		
+	}
+%>
 			</div>
 		</div>
 	</div>
