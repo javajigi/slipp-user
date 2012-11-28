@@ -13,7 +13,7 @@ public class HomeAT {
 
 	@Test
 	public void index() {
-		// System.setProperty("webdriver.firefox.bin", "D:\\tools\\firefox\\firefox.exe");
+		System.setProperty("webdriver.firefox.bin", "D:\\tools\\firefox\\firefox.exe");
 		driver = new FirefoxDriver();
 		driver.get("http://localhost:8080");
 		assertThat(driver.getTitle(), is("SLiPP"));
