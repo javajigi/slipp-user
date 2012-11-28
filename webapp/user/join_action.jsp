@@ -24,8 +24,9 @@
 			request.getParameter("name"),
 			request.getParameter("email"));
 	UserService userService = new UserService();
-	User joinedUser = userService.join(user);
-%>			
+	try {
+		User joinedUser = userService.join(user);
+%>
 				<section id="typography">
 				<div class="page-header">
 					<h1>회원가입</h1>
@@ -33,6 +34,15 @@
 				<div class="messageForm">
 					<p><%= joinedUser.getUserId() %> 계정으로 회원가입 완료되었습니다.</p>
 				</div>
+<%		
+	} catch (ExistedUserException e) {
+%>
+				<div class="error">
+					<%= e.getMessage() %>
+				</div>	
+<%		
+	}
+%>
 			</div>
 		</div>
 	</div>
