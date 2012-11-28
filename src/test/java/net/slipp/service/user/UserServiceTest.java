@@ -10,7 +10,7 @@ public class UserServiceTest {
 	@Test
 	public void 정상적으로_회원가입한다() throws Exception {
 		UserService userService = new UserService();
-		User user = new User("userId", "password", "name", "javajigi@email.com");
+		User user = new User("userId1", "password", "name", "javajigi@email.com");
 		User joinedUser = userService.join(user);
 		assertThat(joinedUser, is(user));
 	}

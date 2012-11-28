@@ -15,7 +15,7 @@ public class UserAT {
 
 	@Before
 	public void setup() {
-		System.setProperty("webdriver.firefox.bin", "D:\\tools\\firefox\\firefox.exe");
+		// System.setProperty("webdriver.firefox.bin", "D:\\tools\\firefox\\firefox.exe");
 		driver = new FirefoxDriver();
 	}
 
