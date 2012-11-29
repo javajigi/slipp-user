@@ -32,6 +32,13 @@
 							<input type="password" id="password" name="password" placeholder="">
 						</div>
 					</div>
+					<c:if test="${not empty errorMessage}">
+					<div class="control-group">
+						<div class="controls">
+							<div class="error">${errorMessage}</div>							
+						</div>
+					</div>					
+					</c:if>
 					<div class="control-group">
 						<div class="controls">
 							<button type="submit" class="btn btn-primary">로그인</button>

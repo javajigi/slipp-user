@@ -36,8 +36,16 @@ public class UserServiceTest {
 	}
 	
 	@Test(expected=PasswordMismatchException.class)
-	public void 로그인_실패() throws Exception {
+	public void 로그인_비밀번호가_달라서_실패() throws Exception {
 		String userId = "admin";
+		String password = "password2";
+		UserService userService = new UserService();
+		userService.login(userId, password);
+	}
+	
+	@Test(expected=PasswordMismatchException.class)
+	public void 로그인_존재하지_않는_사용자라서_실패() throws Exception {
+		String userId = "dontexisted";
 		String password = "password2";
 		UserService userService = new UserService();
 		userService.login(userId, password);
