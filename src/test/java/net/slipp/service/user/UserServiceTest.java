@@ -25,4 +25,21 @@ public class UserServiceTest {
 		User user2 = new User("userId2", "password2", "name2", "javajigi@email.com2");
 		userService.join(user2);
 	}
+	
+	@Test
+	public void 로그인_성공() throws Exception {
+		String userId = "admin";
+		String password = "password";
+		UserService userService = new UserService();
+		User user = userService.login(userId, password);
+		assertThat(user, is(notNullValue()));
+	}
+	
+	@Test(expected=PasswordMismatchException.class)
+	public void 로그인_실패() throws Exception {
+		String userId = "admin";
+		String password = "password2";
+		UserService userService = new UserService();
+		userService.login(userId, password);
+	}
 }

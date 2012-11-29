@@ -23,4 +23,8 @@ public class UserService {
 		return user;
 	}
 
+	public User login(String userId, String password) throws SQLException {
+		UserDao userDao = new UserDao();
+		return userDao.findByUserId(userId);
+	}
 }
