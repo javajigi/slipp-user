@@ -27,6 +27,15 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	public void 사용자_조회() throws Exception {
+		User user3 = new User("userId3", "password2", "name2", "javajigi@email.com2");
+		UserService userService = new UserService();
+		userService.join(user3);
+		User user = userService.findByUserId(user3.getUserId());
+		assertThat(user, is(user3));
+	}
+	
+	@Test
 	public void 로그인_성공() throws Exception {
 		String userId = "admin";
 		String password = "password";
