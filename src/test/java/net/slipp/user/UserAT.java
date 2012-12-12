@@ -20,6 +20,7 @@ public class UserAT {
 
 	@Test
 	public void 회원가입() throws Exception {
+		
 		driver.get("http://localhost:8080");
 		assertThat(driver.getTitle(), is("SLiPP"));
 		
