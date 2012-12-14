@@ -2,17 +2,14 @@ package net.slipp;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import net.slipp.support.AbstractBaseAT;
 
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class HomeAT {
+public class HomeAT extends AbstractBaseAT {
 	@Test
-	public void index() throws Exception {
-		WebDriver driver = new FirefoxDriver();
-		driver.get("http://www.slipp.net");
+	public void index() {
+		driver.get("http://localhost:8080");
 		assertThat(driver.getTitle(), is("SLiPP"));
-		driver.close();
 	}
 }
