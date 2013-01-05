@@ -1,10 +1,12 @@
 package net.slipp.service.user;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
 
+import net.slipp.dao.user.TestUserDaoImpl;
 import net.slipp.domain.user.User;
 
 import org.junit.After;
@@ -18,6 +20,8 @@ public class UserServiceTest {
 	@Before
 	public void setUp() throws SQLException, ExistedUserException {
 		userService = new UserService();
+		userService.setUserDao(new TestUserDaoImpl());
+		
 		user = new User("userId1", "password", "name", "javajigi@email.com");
 		userService.join(user);
 	}

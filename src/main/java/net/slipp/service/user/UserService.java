@@ -2,6 +2,7 @@ package net.slipp.service.user;
 
 import java.sql.SQLException;
 
+import net.slipp.dao.user.JDBCUserDaoImpl;
 import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 
@@ -10,7 +11,11 @@ import org.slf4j.LoggerFactory;
 
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
-	private UserDao userDao = new UserDao();
+	private UserDao userDao = new JDBCUserDaoImpl();
+	
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 	
 	public User join(User user) throws SQLException, ExistedUserException {
 		log.debug("User : {}", user);
