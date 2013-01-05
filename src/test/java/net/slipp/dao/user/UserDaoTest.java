@@ -7,7 +7,6 @@ import net.slipp.domain.user.User;
 import org.junit.Test;
 
 public class UserDaoTest {
-
 	@Test
 	public void crud() throws Exception {
 		User expected = new User("userId", "password", "name", "javajigi@email.com");
@@ -17,5 +16,4 @@ public class UserDaoTest {
 		User actual = userDao.findByUserId(expected.getUserId());
 		assertThat(actual, is(expected));
 	}
-
 }

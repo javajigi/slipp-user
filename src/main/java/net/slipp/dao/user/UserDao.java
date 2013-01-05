@@ -67,4 +67,23 @@ public class UserDao {
 			}
 		}
 	}
+
+	public void deleteAllUser() throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionManager.getConnection();
+			String sql = "DELETE FROM USERS";
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.execute();
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
 }

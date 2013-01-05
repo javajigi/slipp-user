@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
-
+	private UserDao userDao = new UserDao();
+	
 	public User join(User user) throws SQLException, ExistedUserException {
 		log.debug("User : {}", user);
-		UserDao userDao = new UserDao();
 		User existedUser = userDao.findByUserId(user.getUserId());
 		if (existedUser != null) {
 			throw new ExistedUserException(user.getUserId());
@@ -24,7 +24,6 @@ public class UserService {
 	}
 
 	public User login(String userId, String password) throws SQLException, PasswordMismatchException {
-		UserDao userDao = new UserDao();
 		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			throw new PasswordMismatchException();
@@ -38,7 +37,10 @@ public class UserService {
 	}
 
 	public User findByUserId(String userId) throws SQLException {
-		UserDao userDao = new UserDao();
 		return userDao.findByUserId(userId);
+	}
+
+	public void deleteAllUser() throws SQLException {
+		userDao.deleteAllUser();
 	}
 }
