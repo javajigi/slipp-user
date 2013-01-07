@@ -6,7 +6,8 @@ import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
 
-import net.slipp.dao.user.TestUserDaoImpl;
+import net.slipp.dao.user.TestUserDao;
+import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 
 import org.junit.After;
@@ -19,8 +20,8 @@ public class UserServiceTest {
 	
 	@Before
 	public void setUp() throws SQLException, ExistedUserException {
-		userService = new UserService();
-		userService.setUserDao(new TestUserDaoImpl());
+		UserDao userDao = new TestUserDao();
+		userService = new UserService(userDao);
 		
 		user = new User("userId1", "password", "name", "javajigi@email.com");
 		userService.join(user);

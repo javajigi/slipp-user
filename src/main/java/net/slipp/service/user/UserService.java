@@ -2,7 +2,6 @@ package net.slipp.service.user;
 
 import java.sql.SQLException;
 
-import net.slipp.dao.user.JDBCUserDaoImpl;
 import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 
@@ -11,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
-	private UserDao userDao = new JDBCUserDaoImpl();
+	private UserDao userDao = null;
 	
-	public void setUserDao(UserDao userDao) {
+	public UserService(UserDao userDao) {
 		this.userDao = userDao;
 	}
 	
