@@ -1,9 +1,13 @@
 development:
-	driver: org.h2.Driver
-	url: jdbc:h2:~/slipp-user
-	username: sa
-	
-production:
-	driver: org.h2.Driver
-	url: jdbc:h2:~/slipp-user
-	username: sa
+   adapter: h2
+   connectionpool: dhcp
+   protocol: jdbc
+   database: slipp-user
+   username: sa
+   
+develpoment_1:
+   adapter: h2
+   connectionpool: c3p0  
+   protocol: jdbc
+   database: slipp-user
+   username: sa

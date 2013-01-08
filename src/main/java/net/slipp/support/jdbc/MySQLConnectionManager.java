@@ -1,19 +1,34 @@
 package net.slipp.support.jdbc;
 
+import java.beans.PropertyVetoException;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class MySQLConnectionManager extends ConnectionManager{
-	public DataSource getDataSource() throws SQLException{
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:~/slipp-user");
-        dataSource.setUsername("sa");
-        DatabasePopulatorUtils.execute(databasePopulator(), dataSource);
-        return dataSource;
+	public MySQLConnectionManager(Map<String, String> config) {
+		super(config);
+	}
+
+	public DataSource getDataSource() throws SQLException, PropertyVetoException{
+		ComboPooledDataSource cpds = new ComboPooledDataSource();
+		cpds.setDriverClass( "com.mysql.jdbc.Driver" );            
+		cpds.setJdbcUrl(makeUrl());
+		cpds.setUser(username);                                  
+		cpds.setPassword(password);
+        return cpds;
     }
+	
+	private String makeUrl() {
+		String result = "";
+		
+		if(protocol.equals("jdbc"))
+			result += "jdbc:";
+		
+		result += "mysql://" + host +":"+port+"/"+database;
+		return result;
+	}
 }

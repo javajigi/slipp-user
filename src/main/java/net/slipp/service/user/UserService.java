@@ -1,5 +1,6 @@
 package net.slipp.service.user;
 
+import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 
 import net.slipp.dao.user.UserDao;
@@ -16,7 +17,7 @@ public class UserService {
 		this.userDao = userDao;
 	}
 	
-	public User join(User user) throws SQLException, ExistedUserException {
+	public User join(User user) throws SQLException, ExistedUserException, PropertyVetoException {
 		log.debug("User : {}", user);
 		User existedUser = userDao.findByUserId(user.getUserId());
 		if (existedUser != null) {
@@ -27,7 +28,7 @@ public class UserService {
 		return user;
 	}
 
-	public User login(String userId, String password) throws SQLException, PasswordMismatchException {
+	public User login(String userId, String password) throws SQLException, PasswordMismatchException, PropertyVetoException {
 		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			throw new PasswordMismatchException();
@@ -40,11 +41,11 @@ public class UserService {
 		return user;
 	}
 
-	public User findByUserId(String userId) throws SQLException {
+	public User findByUserId(String userId) throws SQLException, PropertyVetoException {
 		return userDao.findByUserId(userId);
 	}
 
-	public void deleteAllUser() throws SQLException {
+	public void deleteAllUser() throws SQLException, PropertyVetoException {
 		userDao.deleteAllUser();
 	}
 }

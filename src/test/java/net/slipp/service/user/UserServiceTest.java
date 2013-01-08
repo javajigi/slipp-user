@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 
 import net.slipp.dao.user.TestUserDao;
@@ -19,7 +20,7 @@ public class UserServiceTest {
 	private User user;
 	
 	@Before
-	public void setUp() throws SQLException, ExistedUserException {
+	public void setUp() throws SQLException, ExistedUserException, PropertyVetoException {
 		UserDao userDao = new TestUserDao();
 		userService = new UserService(userDao);
 		
@@ -28,7 +29,7 @@ public class UserServiceTest {
 	}
 	
 	@After
-	public void tearDown() throws SQLException {
+	public void tearDown() throws SQLException, PropertyVetoException {
 		userService.deleteAllUser();
 	}
 	

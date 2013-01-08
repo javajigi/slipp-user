@@ -1,7 +1,8 @@
 package net.slipp.user;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import net.slipp.support.AbstractBaseAT;
 
 import org.junit.Test;

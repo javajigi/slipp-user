@@ -1,5 +1,6 @@
 package net.slipp.dao.user;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ public class UserDao {
 		this.connectionManager = connectionManager;
 	}
 	
-	public void insert(User user) throws SQLException {
+	public void insert(User user) throws SQLException, PropertyVetoException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -39,7 +40,7 @@ public class UserDao {
 		}
 	}
 
-	public User findByUserId(String userId) throws SQLException {
+	public User findByUserId(String userId) throws SQLException, PropertyVetoException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -74,7 +75,7 @@ public class UserDao {
 		}
 	}
 
-	public void deleteAllUser() throws SQLException {
+	public void deleteAllUser() throws SQLException, PropertyVetoException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -91,5 +92,9 @@ public class UserDao {
 				con.close();
 			}
 		}
+	}
+
+	public Connection getConnection() throws SQLException, PropertyVetoException {
+		return connectionManager.getConnection();
 	}
 }
