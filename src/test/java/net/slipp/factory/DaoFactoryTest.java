@@ -17,11 +17,57 @@ import org.junit.Test;
 
 public class DaoFactoryTest {
 	@Test
-	public void testGetUserDao() throws FileNotFoundException, SQLException, ConfigurationException, PropertyVetoException {
-		UserDao userDao = DaoFactory.getUserDao();
-		Connection connection = userDao.getConnection();
+	public void testGetUserDao_development() throws FileNotFoundException, SQLException, ConfigurationException, PropertyVetoException {
+		System.setProperty("MYENVIRONMENT","development");
 		
-		DatabaseMetaData dmd = connection.getMetaData();
-		assertThat(dmd.getDriverName(), is("H2 JDBC Driver"));
+		Connection connection = null;
+		try {
+			UserDao userDao = DaoFactory.getUserDao();
+			connection = userDao.getConnection();
+
+			DatabaseMetaData dmd = connection.getMetaData();
+			assertThat(dmd.getDriverName(), is("H2 JDBC Driver"));
+			assertThat(dmd.getURL(), is("jdbc:h2:~/slipp-user"));
+		}finally{
+			if(connection != null)
+				connection.close();
+		}
+	}
+
+	
+	@Test
+	public void testGetUserDao_test() throws FileNotFoundException, SQLException, ConfigurationException, PropertyVetoException {
+		System.setProperty("MYENVIRONMENT","test");
+		
+		Connection connection = null;
+		try {
+			UserDao userDao = DaoFactory.getUserDao();
+			connection = userDao.getConnection();
+
+			DatabaseMetaData dmd = connection.getMetaData();
+			assertThat(dmd.getDriverName(), is("MySQL-AB JDBC Driver"));
+			assertThat(dmd.getURL(), is("jdbc:mysql://localhost:3306/slipp_user_test"));
+		}finally{
+			if(connection != null)
+				connection.close();
+		}
+	}
+
+	@Test
+	public void testGetUserDao_production() throws FileNotFoundException, SQLException, ConfigurationException, PropertyVetoException {
+		System.setProperty("MYENVIRONMENT","production");
+		
+		Connection connection = null;
+		try {
+			UserDao userDao = DaoFactory.getUserDao();
+			connection = userDao.getConnection();
+
+			DatabaseMetaData dmd = connection.getMetaData();
+			assertThat(dmd.getDriverName(), is("MySQL-AB JDBC Driver"));
+			assertThat(dmd.getURL(), is("jdbc:mysql://localhost:3306/slipp_user"));
+		}finally {
+			if(connection != null)
+				connection.close();
+		}
 	}
 }

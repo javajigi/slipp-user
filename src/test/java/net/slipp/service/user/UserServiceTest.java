@@ -5,11 +5,14 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import java.beans.PropertyVetoException;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-import net.slipp.dao.user.TestUserDao;
+import javax.naming.ConfigurationException;
+
 import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
+import net.slipp.factory.DaoFactory;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,8 +23,8 @@ public class UserServiceTest {
 	private User user;
 	
 	@Before
-	public void setUp() throws SQLException, ExistedUserException, PropertyVetoException {
-		UserDao userDao = new TestUserDao();
+	public void setUp() throws SQLException, ExistedUserException, PropertyVetoException, FileNotFoundException, ConfigurationException {
+		UserDao userDao = DaoFactory.getUserDao();
 		userService = new UserService(userDao);
 		
 		user = new User("userId1", "password", "name", "javajigi@email.com");

@@ -5,9 +5,21 @@ development:
    database: slipp-user
    username: sa
    
-develpoment_1:
-   adapter: h2
+test:
+   adapter: mysql
+   connectionpool: dhcp
+   protocol: jdbc
+   host: localhost
+   port: 3306
+   database: slipp_user_test
+   username: root
+   
+production:
+   adapter: mysql
    connectionpool: c3p0  
    protocol: jdbc
-   database: slipp-user
-   username: sa
+   host: localhost
+   port: 3306
+   database: slipp_user
+   username: root
+
