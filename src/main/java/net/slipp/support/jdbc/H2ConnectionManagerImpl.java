@@ -18,7 +18,7 @@ public class H2ConnectionManagerImpl extends ConnectionManagerImpl{
 		super(config);
 	}
 
-	public DataSource getDataSource() throws SQLException, PropertyVetoException{
+	protected DataSource getDataSource() throws SQLException, PropertyVetoException{
 		DataSource dataSource = null;
 		if(connectionpool.equals("dhcp")) {
 			dataSource = new BasicDataSource();

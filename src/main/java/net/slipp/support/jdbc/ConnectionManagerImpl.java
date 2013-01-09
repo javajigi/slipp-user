@@ -41,7 +41,7 @@ public abstract class ConnectionManagerImpl implements ConnectionManager{
         return dataSource.getConnection();
     }
 
-    public abstract DataSource getDataSource() throws SQLException, PropertyVetoException;
+    protected abstract DataSource getDataSource() throws SQLException, PropertyVetoException;
     
 	protected DatabasePopulator databasePopulator() {
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
