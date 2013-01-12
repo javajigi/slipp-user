@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThat;
 
 import net.slipp.dao.user.UserDao;
 
+import static org.hamcrest.core.IsNull.nullValue;
 import org.junit.Test;
 
 public class DaoFactoryTest {
@@ -38,19 +39,11 @@ public class DaoFactoryTest {
 	@Test
 	public void testGetUserDao_test() throws FileNotFoundException, SQLException, ConfigurationException, PropertyVetoException {
 		System.setProperty("MYENVIRONMENT","test");
-		
-		Connection connection = null;
-		try {
-			UserDao userDao = DaoFactory.getUserDao();
-			connection = userDao.getConnection();
 
-			DatabaseMetaData dmd = connection.getMetaData();
-			assertThat(dmd.getDriverName(), is("MySQL-AB JDBC Driver"));
-			assertThat(dmd.getURL(), is("jdbc:mysql://localhost:3306/slipp_user_test"));
-		}finally{
-			if(connection != null)
-				connection.close();
-		}
+		UserDao userDao = DaoFactory.getUserDao();
+		Connection connection = userDao.getConnection();
+
+		assertThat(connection, is(nullValue()));
 	}
 
 	@Test

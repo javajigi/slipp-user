@@ -12,7 +12,8 @@ public class UserDaoTest {
 	public void crud() throws Exception {
 		User expected = new User("userId", "password", "name", "javajigi@email.com");
 		 
-		UserDao userDao = DaoFactory.getUserDao();
+		//UserDao userDao = DaoFactory.getUserDao();
+		UserDao userDao = new TestUserDaoImpl();
 		userDao.insert(expected);
 		
 		User actual = userDao.findByUserId(expected.getUserId());
