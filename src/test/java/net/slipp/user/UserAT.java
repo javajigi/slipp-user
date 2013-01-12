@@ -7,6 +7,7 @@ import net.slipp.support.AbstractBaseAT;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class UserAT extends AbstractBaseAT {
 	@Test
@@ -124,12 +125,13 @@ public class UserAT extends AbstractBaseAT {
 	}
 
 	public void goJoin() {
-		driver.findElement(By.linkText("회원가입")).click();
+		WebElement element = driver.findElement(By.linkText("회원가입"));
+		element.click();
 		assertThat(driver.getTitle(), is("SLiPP :: 회원가입"));
 	}
 
 	public void goIndex() {
-		driver.get("http://localhost:8080");
+		driver.get("http://localhost:8080/slipp-user");
 		assertThat(driver.getTitle(), is("SLiPP"));
 	}
 }
