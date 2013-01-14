@@ -37,6 +37,13 @@ public class User {
 		return loginPassword.equals(password);
 	}
 	
+	public void update(User user) {
+		this.userId = user.getUserId();
+		this.password = user.getPassword();
+		this.name = user.getName();
+		this.email = user.getEmail();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

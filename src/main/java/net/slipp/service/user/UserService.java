@@ -1,5 +1,6 @@
 package net.slipp.service.user;
 
+import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 
 import net.slipp.dao.user.UserDao;
@@ -10,10 +11,14 @@ import org.slf4j.LoggerFactory;
 
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
-
-	public User join(User user) throws SQLException, ExistedUserException {
+	private UserDao userDao = null;
+	
+	public UserService(UserDao userDao) {
+		this.userDao = userDao;
+	}
+	
+	public User join(User user) throws SQLException, ExistedUserException, PropertyVetoException {
 		log.debug("User : {}", user);
-		UserDao userDao = new UserDao();
 		User existedUser = userDao.findByUserId(user.getUserId());
 		if (existedUser != null) {
 			throw new ExistedUserException(user.getUserId());
@@ -23,8 +28,7 @@ public class UserService {
 		return user;
 	}
 
-	public User login(String userId, String password) throws SQLException, PasswordMismatchException {
-		UserDao userDao = new UserDao();
+	public User login(String userId, String password) throws SQLException, PasswordMismatchException, PropertyVetoException {
 		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			throw new PasswordMismatchException();
@@ -37,8 +41,11 @@ public class UserService {
 		return user;
 	}
 
-	public User findByUserId(String userId) throws SQLException {
-		UserDao userDao = new UserDao();
+	public User findByUserId(String userId) throws SQLException, PropertyVetoException {
 		return userDao.findByUserId(userId);
+	}
+
+	public void deleteAllUser() throws SQLException, PropertyVetoException {
+		userDao.deleteAllUser();
 	}
 }
