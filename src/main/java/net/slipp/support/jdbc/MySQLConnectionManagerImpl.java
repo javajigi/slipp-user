@@ -12,7 +12,7 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class MySQLConnectionManagerImpl extends ConnectionManagerImpl{
-	private static final String MYSQL_DRIVER_NAME = "org.h2.Driver";
+	private static final String MYSQL_DRIVER_NAME = "com.mysql.jdbc.Driver";
 	
 	public MySQLConnectionManagerImpl(Map<String, Object> config) {
 		super(config);
@@ -25,6 +25,7 @@ public class MySQLConnectionManagerImpl extends ConnectionManagerImpl{
 			((BasicDataSource)dataSource).setDriverClassName(MYSQL_DRIVER_NAME);
 			((BasicDataSource)dataSource).setUrl(makeUrl());
 			((BasicDataSource)dataSource).setUsername(username);
+			((BasicDataSource)dataSource).setPassword(password);
 		}else if(connectionpool.equals("c3p0")) {
 			dataSource = new ComboPooledDataSource();
 			((ComboPooledDataSource)dataSource).setDriverClass(MYSQL_DRIVER_NAME);            

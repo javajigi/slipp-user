@@ -16,17 +16,24 @@ private ConnectionManager connectionManager = null;
 	}
 	
 	public void insert(User user) throws SQLException, PropertyVetoException {
+		String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
+		executeUpdate(user, sql);
+	}
+
+	private void executeUpdate(User user,String sql) throws SQLException,
+			PropertyVetoException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = connectionManager.getConnection();
-			String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
+			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, user.getUserId());
-			pstmt.setString(2, user.getPassword());
-			pstmt.setString(3, user.getName());
-			pstmt.setString(4, user.getEmail());
-
+			if(user != null){
+				pstmt.setString(1, user.getUserId());
+				pstmt.setString(2, user.getPassword());
+				pstmt.setString(3, user.getName());
+				pstmt.setString(4, user.getEmail());
+			}
 			pstmt.executeUpdate();
 		} finally {
 			close(con, pstmt);
@@ -64,17 +71,8 @@ private ConnectionManager connectionManager = null;
 	}
 
 	public void deleteAllUser() throws SQLException, PropertyVetoException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = connectionManager.getConnection();
-			String sql = "DELETE FROM USERS";
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.execute();
-		} finally {
-			close(con, pstmt);
-		}
+		String sql = "DELETE FROM USERS";
+		executeUpdate(null,sql);
 	}
 
 	private void close(Connection con, PreparedStatement pstmt)
