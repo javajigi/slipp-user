@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao{
 		
 			String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
 			User user = new User(userId,"","","");
-			return execute(null,sql,QUERY_TYPE_SELECT);
+			return execute(user,sql,QUERY_TYPE_SELECT);
 	}
 
 	public void deleteAllUser() throws SQLException, PropertyVetoException {
