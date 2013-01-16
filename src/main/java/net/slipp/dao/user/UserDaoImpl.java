@@ -29,13 +29,7 @@ private ConnectionManager connectionManager = null;
 
 			pstmt.executeUpdate();
 		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-
-			if (con != null) {
-				con.close();
-			}
+			close(con, pstmt);
 		}
 	}
 
@@ -65,12 +59,7 @@ private ConnectionManager connectionManager = null;
 			if (rs != null) {
 				rs.close();
 			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (con != null) {
-				con.close();
-			}
+			close(con, pstmt);
 		}
 	}
 
@@ -84,12 +73,17 @@ private ConnectionManager connectionManager = null;
 			
 			pstmt.execute();
 		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (con != null) {
-				con.close();
-			}
+			close(con, pstmt);
+		}
+	}
+
+	private void close(Connection con, PreparedStatement pstmt)
+			throws SQLException {
+		if (pstmt != null) {
+			pstmt.close();
+		}
+		if (con != null) {
+			con.close();
 		}
 	}
 
