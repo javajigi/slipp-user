@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	
-	    private User execute(User user,String sql, String queryType) throws SQLException,
+	private User execute(User user,String sql, String queryType) throws SQLException,
 	            PropertyVetoException {
 	         
 	        Connection con = null;
@@ -48,6 +48,9 @@ public class UserDaoImpl implements UserDao{
 	            }
 	        } finally {
 	            close(con, pstmt);
+	            if (rs != null) {
+	            	rs.close();
+	    		}
 	        }
 	    }
 	    private User setResultSet(ResultSet rs) throws SQLException {
