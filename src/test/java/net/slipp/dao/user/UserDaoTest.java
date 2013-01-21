@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.slipp.domain.user.User;
+import net.slipp.factory.DaoFactory;
 import net.slipp.support.jdbc.ConnectionManager;
 import net.slipp.support.jdbc.MySQLConnectionManagerImpl;
 
@@ -23,22 +24,12 @@ public class UserDaoTest {
 		User actual = userDao.findByUserId(expected.getUserId());
 		assertThat(actual, is(expected));
 	}
+	
 	@Test
-	public void crudMySQL() throws Exception {
+	public void crudH2() throws Exception {
 		User expected = new User("userId", "password", "name", "javajigi@email.com");
 	
-		Map<String, Object> config = new HashMap(); 
-		config.put("adapter", "mysql");
-		config.put("connectionpool", "dhcp");
-		config.put("protocol", "jdbc");
-		config.put("host", "localhost");
-		config.put("port", "3306");
-		config.put("database", "slipp_user_test");
-		config.put("username", "root");
-		config.put("password", "16241624");
-	
-		ConnectionManager connectionManager = new MySQLConnectionManagerImpl(config);
-		UserDao userDao = new UserDaoImpl(connectionManager);
+		UserDao userDao = DaoFactory.getUserDao();
 		userDao.deleteAllUser();
 		userDao.insert(expected);
 	
