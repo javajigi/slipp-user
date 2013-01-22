@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import net.slipp.domain.user.User;
 import net.slipp.support.jdbc.ConnectionManager;
 
-public abstract class JdbcTemplate {
+public class JdbcTemplate {
 	private ConnectionManager connectionManager = null;
 	
 	public JdbcTemplate(ConnectionManager connectionManager) {
 		this.connectionManager = connectionManager;
 	}
 	
-	public User select(User user,String sql) throws SQLException,
+	public User select(String sql, PreparedStatementSetter pss, RowMapper rowMapper) throws SQLException,
     PropertyVetoException {
  
 			Connection con = null;
@@ -25,13 +25,12 @@ public abstract class JdbcTemplate {
 			 
 			try {
 			    con = connectionManager.getConnection();
-			     
 			    pstmt = con.prepareStatement(sql);
-			    setPreparedStatement(pstmt);
+			    pss.setValue(pstmt);
 			    
 			    rs = pstmt.executeQuery();
 			    if(rs.next())
-			    	return setResultSet(rs);
+			    	return rowMapper.setResultSet(rs);
 			    return null;
 			    
 			} finally {
@@ -41,7 +40,7 @@ public abstract class JdbcTemplate {
 				}
 			}
 		}
-	public void update(User user,String sql) throws SQLException,
+	public void update(String sql,PreparedStatementSetter pss) throws SQLException,
     PropertyVetoException {
  
 			Connection con = null;
@@ -52,7 +51,7 @@ public abstract class JdbcTemplate {
 			    con = connectionManager.getConnection();
 			     
 			    pstmt = con.prepareStatement(sql);
-			    setPreparedStatement(pstmt);
+			    pss.setValue(pstmt);
 			    
 			    pstmt.executeUpdate();
 			    
@@ -63,11 +62,7 @@ public abstract class JdbcTemplate {
 				}
 			}
 		}
-	 abstract User setResultSet(ResultSet rs) throws SQLException;
 	 
-	 abstract void setPreparedStatement( PreparedStatement pstmt)
-	            throws SQLException;
-	    
 	 private void close(Connection con, PreparedStatement pstmt)
 				throws SQLException {
 			if (pstmt != null) {
