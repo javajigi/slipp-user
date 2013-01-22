@@ -16,23 +16,51 @@ public class UserDaoImpl implements UserDao{
 		this.connectionManager = connectionManager;
 	}
 	
-	public void insert(User user) throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
+	public void insert(final User user) throws SQLException, PropertyVetoException {
+		JdbcTemplate template = new JdbcTemplate(connectionManager){
+			void setPreparedStatement(PreparedStatement pstmt) throws SQLException{
+				pstmt.setString(1, user.getUserId());
+	            pstmt.setString(2, user.getPassword());
+	            pstmt.setString(3, user.getName());
+	            pstmt.setString(4, user.getEmail());
+			}
+			User setResultSet(ResultSet rs) throws SQLException{
+				return null;
+			}
+		};
 		String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-		template.execute(user, sql, "INSERT");
+		template.update(user, sql);
 	}
 
-	public User findByUserId(String userId) throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
+	public User findByUserId(final String userId) throws SQLException, PropertyVetoException {
+		JdbcTemplate template = new JdbcTemplate(connectionManager){
+			void setPreparedStatement(PreparedStatement pstmt) throws SQLException{
+				pstmt.setString(1,userId);
+			}
+			User setResultSet(ResultSet rs) throws SQLException{
+				User rsUser = new User(
+		                    rs.getString("userId"), 
+		                    rs.getString("password"), 
+		                    rs.getString("name"),
+		                    rs.getString("email"));
+		        return rsUser;
+			}
+		};
 		String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
 		User user = new User(userId,"","","");
-		return template.execute(user,sql,"SELECT");
+		return template.select(user,sql);
 	}
 
 	public void deleteAllUser() throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
+		JdbcTemplate template = new JdbcTemplate(connectionManager){
+			void setPreparedStatement(PreparedStatement pstmt) throws SQLException{
+			}
+			User setResultSet(ResultSet rs) throws SQLException{
+				return null;
+			}
+		};
 		String sql = "DELETE FROM USERS";
-		template.execute(null,sql,"DELETE");
+		template.update(null,sql);
 	}
 
 	public Connection getConnection() throws SQLException, PropertyVetoException {
