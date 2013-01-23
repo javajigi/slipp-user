@@ -3,13 +3,8 @@ package net.slipp.dao.user;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.slipp.domain.user.User;
 import net.slipp.factory.DaoFactory;
-import net.slipp.support.jdbc.ConnectionManager;
-import net.slipp.support.jdbc.MySQLConnectionManagerImpl;
 
 import org.junit.Before;
 import org.junit.Test;
