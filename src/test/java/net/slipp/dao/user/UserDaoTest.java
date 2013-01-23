@@ -37,5 +37,10 @@ public class UserDaoTest {
 	
 		User actual = userDao.findByUserId(expectedUser.getUserId());
 		assertThat(actual, is(expectedUser));
+		
+		int result = userDao.countUser();
+		assertThat(result,is(1));
 	}
+	
+	
 }

@@ -18,16 +18,9 @@ public class UserDaoImpl implements UserDao{
 	
 	public void insert(final User user) throws SQLException, PropertyVetoException {
 		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		PreparedStatementSetter pss = new PreparedStatementSetter(){
-			public void setValue(PreparedStatement pstmt) throws SQLException{
-				pstmt.setString(1, user.getUserId());
-	            pstmt.setString(2, user.getPassword());
-	            pstmt.setString(3, user.getName());
-	            pstmt.setString(4, user.getEmail());
-			}
-		};
+		
 		String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-		template.update(sql,pss);
+		template.update(sql,user.getUserId(),user.getPassword(),user.getName(),user.getEmail());
 	}
 
 	public User findByUserId(final String userId) throws SQLException, PropertyVetoException {
@@ -39,7 +32,7 @@ public class UserDaoImpl implements UserDao{
 			}
 		};
 		
-		RowMapper rowMapper = new RowMapper(){
+		RowMapper<User> rowMapper = new RowMapper<User>(){
 			@Override
 			public User setResultSet(ResultSet rs) throws SQLException {
 				return new User(
@@ -55,15 +48,19 @@ public class UserDaoImpl implements UserDao{
 
 	public void deleteAllUser() throws SQLException, PropertyVetoException {
 		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		PreparedStatementSetter pss = new PreparedStatementSetter(){
-			public void setValue(PreparedStatement pstmt) throws SQLException{
-			}
-		};
+		
 		String sql = "DELETE FROM USERS";
-		template.update(sql,pss);
+		template.update(sql);
 	}
 
 	public Connection getConnection() throws SQLException, PropertyVetoException {
 		return connectionManager.getConnection();
+	}
+
+	@Override
+	public int countUser() throws SQLException, PropertyVetoException {
+		JdbcTemplate template = new JdbcTemplate(connectionManager);
+		String sql = "select count(*) FROM USERS";
+		return template.queryForInt(sql);
 	}
 }
