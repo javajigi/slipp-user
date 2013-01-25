@@ -29,4 +29,10 @@ public class TestUserDaoImpl implements UserDao{
 	public Connection getConnection() throws SQLException,PropertyVetoException {
 		return null;
 	}
+
+	@Override
+	public int countUser() throws SQLException, PropertyVetoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
