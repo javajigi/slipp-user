@@ -22,6 +22,14 @@ public class UserDaoImpl implements UserDao{
 		String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
 		template.update(sql,user.getUserId(),user.getPassword(),user.getName(),user.getEmail());
 	}
+	
+	@Override
+    public void update(User user) throws SQLException, PropertyVetoException {
+        JdbcTemplate template = new JdbcTemplate(connectionManager);
+        
+        String sql = "UPDATE USERS SET name=?, email=? WHERE userId = ?";
+        template.update(sql,user.getName(),user.getEmail(),user.getUserId());
+    }
 
 	public User findByUserId(final String userId) throws SQLException, PropertyVetoException {
 		JdbcTemplate template = new JdbcTemplate(connectionManager);

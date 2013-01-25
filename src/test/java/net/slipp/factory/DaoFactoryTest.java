@@ -56,8 +56,8 @@ public class DaoFactoryTest {
 			connection = userDao.getConnection();
 
 			DatabaseMetaData dmd = connection.getMetaData();
-			assertThat(dmd.getDriverName(), is("MySQL-AB JDBC Driver"));
-			assertThat(dmd.getURL(), is("jdbc:mysql://localhost:3306/slipp_user"));
+			assertThat(dmd.getDriverName(), is("H2 JDBC Driver"));
+			assertThat(dmd.getURL(), is("jdbc:h2:~/slipp-user"));
 		}finally {
 			if(connection != null)
 				connection.close();

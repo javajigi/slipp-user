@@ -39,7 +39,6 @@ public class User {
 	
 	public void update(User user) {
 		this.userId = user.getUserId();
-		this.password = user.getPassword();
 		this.name = user.getName();
 		this.email = user.getEmail();
 	}

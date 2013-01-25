@@ -32,7 +32,11 @@ public class TestUserDaoImpl implements UserDao{
 
 	@Override
 	public int countUser() throws SQLException, PropertyVetoException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
+
+    @Override
+    public void update(User user) throws SQLException, PropertyVetoException {
+        db.put(user.getUserId(), user);
+    }
 }

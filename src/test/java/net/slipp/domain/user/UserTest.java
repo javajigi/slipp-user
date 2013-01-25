@@ -39,7 +39,6 @@ public class UserTest {
 		user.update(new User(newUserId, newPassword, newName, newEmail));
 		
 		assertThat(user.getUserId(), is(newUserId));
-		assertThat(user.getPassword(), is(newPassword));
 		assertThat(user.getName(), is(newName));
 		assertThat(user.getEmail(), is(newEmail));
 		

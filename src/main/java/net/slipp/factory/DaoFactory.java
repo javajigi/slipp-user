@@ -14,6 +14,8 @@ import net.slipp.support.jdbc.H2ConnectionManagerImpl;
 import net.slipp.support.jdbc.MySQLConnectionManagerImpl;
 
 public class DaoFactory {
+    private static ConnectionManager connectionManager;
+    
 	public static UserDao getUserDao() throws FileNotFoundException, ConfigurationException {
 		if(ConfigManager.getEnvironment().equals("test"))
 			return new TestUserDaoImpl();
@@ -22,7 +24,9 @@ public class DaoFactory {
 		if(config == null)
 			throw new ConfigurationException("해당 config 없음요!");
 		
-		ConnectionManager connectionManager = getConnectionManager(config);
+		if ( connectionManager == null ) {
+		    connectionManager = getConnectionManager(config);
+		}
 		
 		return new UserDaoImpl(connectionManager);
 	}

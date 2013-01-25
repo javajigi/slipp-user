@@ -9,7 +9,7 @@ import org.junit.Test;
 public class HomeAT extends AbstractBaseAT {
 	@Test
 	public void index() {
-		driver.get("http://localhost:8080/slipp-user");
+		driver.get("http://localhost:8080");
 		assertThat(driver.getTitle(), is("SLiPP"));
 	}
 }

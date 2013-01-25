@@ -27,6 +27,13 @@ public class UserService {
 		userDao.insert(user);
 		return user;
 	}
+	
+	public User update(User user) throws SQLException, PropertyVetoException {
+	    User existedUser = userDao.findByUserId(user.getUserId());
+	    userDao.update(user);
+	    
+	    return existedUser;
+	}
 
 	public User login(String userId, String password) throws SQLException, PasswordMismatchException, PropertyVetoException {
 		User user = userDao.findByUserId(userId);

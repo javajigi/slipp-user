@@ -26,11 +26,17 @@ public class UserDaoTest {
 		
 		User actual = userDao.findByUserId(expectedUser.getUserId());
 		assertThat(actual, is(expectedUser));
+		
+		User updateUser = new User("userId", "password", "updatedName", "sanjigi@email.com");
+		expectedUser.update(updateUser);
+		userDao.update(updateUser);
+		
+		actual = userDao.findByUserId(expectedUser.getUserId());
+        assertThat(actual, is(updateUser));
 	}
 	
 	@Test
 	public void crudH2() throws Exception {
-	
 		userDao = DaoFactory.getUserDao();
 		userDao.deleteAllUser();
 		userDao.insert(expectedUser);
@@ -40,6 +46,13 @@ public class UserDaoTest {
 		
 		int result = userDao.countUser();
 		assertThat(result,is(1));
+		
+		User updateUser = new User("userId", "password", "updatedName", "sanjigi@email.com");
+        expectedUser.update(updateUser);
+        userDao.update(updateUser);
+        
+        actual = userDao.findByUserId(expectedUser.getUserId());
+        assertThat(actual, is(updateUser));
 	}
 	
 	
