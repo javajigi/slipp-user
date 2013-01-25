@@ -125,6 +125,7 @@
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<wtpversion>2.0</wtpversion>
+					<wtpContextName>/</wtpContextName>
 				</configuration>
 			</plugin>
 			<plugin>

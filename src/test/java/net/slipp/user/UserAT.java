@@ -131,7 +131,7 @@ public class UserAT extends AbstractBaseAT {
 	}
 
 	public void goIndex() {
-		driver.get("http://localhost:8080/slipp-user");
+		driver.get("http://localhost:8080/");
 		assertThat(driver.getTitle(), is("SLiPP"));
 	}
 }

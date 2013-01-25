@@ -13,7 +13,7 @@
 	try {
 		User user = userService.login(userId, password);
 		session.setAttribute("loginUser", user);
-		response.sendRedirect("/slipp-user");
+		response.sendRedirect("/");
 	} catch (PasswordMismatchException e) {
 		request.setAttribute("errorMessage", e.getMessage());
 		RequestDispatcher rd = request.getRequestDispatcher("/user/login.jsp");

@@ -10,7 +10,7 @@
 			request.getParameter("name"),
 			request.getParameter("email"));
 	UserService userService = ServiceFactory.getUserService();
-	// userService.update(user);
+	userService.update(user);
 	
-	response.sendRedirect("/slipp-user");
+	response.sendRedirect("/");
 %>

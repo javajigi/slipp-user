@@ -26,7 +26,7 @@ User user = userService.findByUserId(loginUser.getUserId());
 				<div class="page-header">
 					<h1>회원가입</h1>
 				</div>
-				<form class="form-horizontal" action="/slipp-user/user/update_action.jsp" method="post">
+				<form class="form-horizontal" action="/user/update_action.jsp" method="post">
 					<input type="hidden" name="userId" value="<%= user.getUserId() %>" />
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
