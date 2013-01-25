@@ -11,4 +11,5 @@ public interface UserDao {
 	public User findByUserId(String userId) throws SQLException, PropertyVetoException;
 	public void deleteAllUser() throws SQLException, PropertyVetoException;
 	public Connection getConnection() throws SQLException, PropertyVetoException;
+	public int countUser() throws SQLException, PropertyVetoException;
 }
