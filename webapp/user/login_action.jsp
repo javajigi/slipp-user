@@ -3,11 +3,12 @@
 <%@ page import="javax.servlet.*" %>
 <%@ page import="net.slipp.domain.user.*" %>
 <%@ page import="net.slipp.service.user.*" %>
+<%@ page import="net.slipp.factory.*" %>
 
 <%
 	String userId = request.getParameter("userId");
 	String password = request.getParameter("password");
-	UserService userService = new UserService();
+	UserService userService = ServiceFactory.getUserService();
 	
 	try {
 		User user = userService.login(userId, password);

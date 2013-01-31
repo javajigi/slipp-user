@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="net.slipp.domain.user.*" %>
 <%@ page import="net.slipp.service.user.*" %>
+<%@ page import="net.slipp.factory.*" %>
 <%
 User loginUser = (User)session.getAttribute("loginUser");
-UserService userService = new UserService();
+UserService userService = ServiceFactory.getUserService();
 User user = userService.findByUserId(loginUser.getUserId());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

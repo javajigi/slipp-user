@@ -1,7 +1,7 @@
 package net.slipp.domain.user;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
@@ -26,5 +26,21 @@ public class UserTest {
 		
 		user = new User("userId", null, "name", "javajigi@email.com");
 		assertThat(user.matchPassword("password"), is(false));
+	}
+	
+	@Test
+	public void 업데이트_테스트() {
+		User user = new User("userId", "password", "name", "javajigi@email.com");
+		
+		String newUserId = "newUserId";
+		String newPassword = "newPassword";
+		String newName = "newName";
+		String newEmail = "newEmail";
+		user.update(new User(newUserId, newPassword, newName, newEmail));
+		
+		assertThat(user.getUserId(), is(newUserId));
+		assertThat(user.getName(), is(newName));
+		assertThat(user.getEmail(), is(newEmail));
+		
 	}
 }

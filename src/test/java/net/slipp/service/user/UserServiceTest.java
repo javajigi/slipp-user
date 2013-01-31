@@ -1,62 +1,66 @@
 package net.slipp.service.user;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import net.slipp.domain.user.User;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
+import java.beans.PropertyVetoException;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+
+import javax.naming.ConfigurationException;
+
+import net.slipp.dao.user.UserDao;
+import net.slipp.domain.user.User;
+import net.slipp.factory.DaoFactory;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UserServiceTest {
-	@Test
-	public void 정상적으로_회원가입한다() throws Exception {
-		UserService userService = new UserService();
-		User user = new User("userId1", "password", "name", "javajigi@email.com");
-		User joinedUser = userService.join(user);
-		assertThat(joinedUser, is(user));
+	private UserService userService;
+	private User user;
+	
+	@Before
+	public void setUp() throws SQLException, ExistedUserException, PropertyVetoException, FileNotFoundException, ConfigurationException {
+		UserDao userDao = DaoFactory.getUserDao();
+		userService = new UserService(userDao);
+		
+		user = new User("userId1", "password", "name", "javajigi@email.com");
+		userService.join(user);
+	}
+	
+	@After
+	public void tearDown() throws SQLException, PropertyVetoException {
+		userService.deleteAllUser();
 	}
 	
 	@Test(expected=ExistedUserException.class)
 	public void 이미_존재하는_사용자_아이디로_회원가입한다() throws Exception {
-		UserService userService = new UserService();
-		User user1 = new User("userId2", "password", "name", "javajigi@email.com");
-		User joinedUser = userService.join(user1);
-		assertThat(joinedUser, is(user1));
-		
-		User user2 = new User("userId2", "password2", "name2", "javajigi@email.com2");
-		userService.join(user2);
+		userService.join(user);
 	}
 	
 	@Test
 	public void 사용자_조회() throws Exception {
-		User user3 = new User("userId3", "password2", "name2", "javajigi@email.com2");
-		UserService userService = new UserService();
-		userService.join(user3);
-		User user = userService.findByUserId(user3.getUserId());
-		assertThat(user, is(user3));
+		assertThat(userService.findByUserId(user.getUserId()), is(user));
 	}
 	
 	@Test
 	public void 로그인_성공() throws Exception {
-		String userId = "admin";
-		String password = "password";
-		UserService userService = new UserService();
-		User user = userService.login(userId, password);
-		assertThat(user, is(notNullValue()));
+		User login_user = userService.login(user.getUserId(), user.getPassword());
+		assertThat(login_user, is(notNullValue()));
 	}
 	
 	@Test(expected=PasswordMismatchException.class)
 	public void 로그인_비밀번호가_달라서_실패() throws Exception {
-		String userId = "admin";
-		String password = "password2";
-		UserService userService = new UserService();
-		userService.login(userId, password);
+		userService.login("admin", "password2");
 	}
 	
 	@Test(expected=PasswordMismatchException.class)
 	public void 로그인_존재하지_않는_사용자라서_실패() throws Exception {
 		String userId = "dontexisted";
 		String password = "password2";
-		UserService userService = new UserService();
 		userService.login(userId, password);
 	}
 }
