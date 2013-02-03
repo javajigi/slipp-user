@@ -37,5 +37,24 @@
 	<servlet-mapping>
 		<servlet-name>H2Console</servlet-name>
 		<url-pattern>/admin/h2/*</url-pattern>
-	</servlet-mapping>    
+	</servlet-mapping>
+	
+	<!--  UserServlet for mapping the join and login -->
+	<servlet>
+		<servlet-name>UserJoin</servlet-name>
+		<servlet-class>net.slipp.support.web.UserJoinServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserJoin</servlet-name>
+		<url-pattern>/user/join</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UserLogin</servlet-name>
+		<servlet-class>net.slipp.support.web.UserLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserLogin</servlet-name>
+		<url-pattern>/user/login</url-pattern>
+	</servlet-mapping>
 </web-app>
