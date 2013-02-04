@@ -12,6 +12,7 @@ public class AbstractBaseAT {
 	public void setup() {
 		// System.setProperty("webdriver.firefox.bin", "D:\\tools\\firefox\\firefox.exe");
 		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 	}
 	
 	@After
