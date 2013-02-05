@@ -1,13 +1,11 @@
 package net.slipp.user;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import net.slipp.support.AbstractBaseAT;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class UserAT extends AbstractBaseAT {
 	@Test
@@ -47,16 +45,15 @@ public class UserAT extends AbstractBaseAT {
 		회원가입(userId, password);
 		goLogin();
 		login(userId, password);
-		assertThat(driver.findElement(By.linkText("로그아웃")), is(notNullValue()));
+		assertThat(찾기_엘리먼트(By.linkText("로그아웃")), is(notNullValue()));
 		
-		driver.findElement(By.linkText("개인정보수정")).click();
-		driver.findElement(By.id("password")).clear();
-		driver.findElement(By.id("password")).sendKeys(password);
-		driver.findElement(By.id("name")).clear();
-		driver.findElement(By.id("name")).sendKeys("자바지기");
-		driver.findElement(By.id("email")).clear();
-		driver.findElement(By.id("email")).sendKeys("javajigi@slipp.net");
-		driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
+		조작_클릭(By.linkText("개인정보수정"));
+		
+		조작_입력("#password", password);
+		조작_입력("#name", "자바지기");
+		조작_입력("#email", "javajigi@slipp.net");
+		
+		조작_클릭("button.btn.btn-primary");
 	}
 	
 	@Test
@@ -65,23 +62,22 @@ public class UserAT extends AbstractBaseAT {
 		goLogin();
 		login("admin", "password");
 		
-		assertThat(driver.findElement(By.linkText("로그아웃")), is(notNullValue()));
+		assertThat(찾기_엘리먼트(By.linkText("로그아웃")), is(notNullValue()));
 	}
 
 	private void goLogin() {
-		driver.findElement(By.linkText("로그인")).click();
-		assertThat(driver.getTitle(), is("SLiPP :: 로그인"));
+		조작_클릭(By.linkText("로그인"));
+		검증_타이틀("SLiPP :: 로그인");
 	}
-	
+
 	@Test
 	public void 로그인_실패() throws Exception {
 		goIndex();
 		goLogin();
 		login("admin", "password2");
 		
-		assertThat(driver.findElement(By.linkText("로그인")), is(notNullValue()));
-		String actualMessage = driver.findElement(By.cssSelector("div.error")).getText();
-		assertThat(actualMessage, is("아이디와 비밀번호가 틀립니다."));
+		assertThat(찾기_엘리먼트(By.linkText("로그인")), is(notNullValue()));
+		검증_텍스트("div.error", "아이디와 비밀번호가 틀립니다.");
 	}
 
 	@Test
@@ -90,48 +86,38 @@ public class UserAT extends AbstractBaseAT {
 		goLogin();
 		login("admin", "password");
 		
-		driver.findElement(By.linkText("로그아웃")).click();
-		assertThat(driver.findElement(By.linkText("로그인")), is(notNullValue()));
+		조작_클릭(By.linkText("로그아웃"));
+		assertThat(찾기_엘리먼트(By.linkText("로그인")), is(notNullValue()));
 	}
 	
 	public void login(String userId, String password) {
-		driver.findElement(By.id("userId")).clear();
-		driver.findElement(By.id("userId")).sendKeys(userId);
-		driver.findElement(By.id("password")).clear();
-		driver.findElement(By.id("password")).sendKeys(password);
-		driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
+		조작_입력("#userId", userId);
+		조작_입력("#password", password);
+		조작_클릭("button.btn.btn-primary");
 	}
 	
 	private void expectedAlreadyExistedErrorMessage(String userId) {
-		String actualMessage = driver.findElement(By.cssSelector("div.error")).getText();
-		assertThat(actualMessage, is(userId + "는 이미 존재하는 아이디입니다."));
+		검증_텍스트("div.error",userId + "는 이미 존재하는 아이디입니다.");
 	}
 
 	public void verifyCompletedJoin(String userId) {
-		String actualMessage = driver.findElement(By.cssSelector("div.messageForm > p")).getText();
-		assertThat(actualMessage, is(userId + " 계정으로 회원가입 완료되었습니다."));
+		검증_텍스트("div.messageForm > p",userId + " 계정으로 회원가입 완료되었습니다.");
 	}
 
 	public void join(String userId, String password) {
-		driver.findElement(By.id("userId")).clear();
-		driver.findElement(By.id("userId")).sendKeys(userId);
-		driver.findElement(By.id("password")).clear();
-		driver.findElement(By.id("password")).sendKeys(password);
-		driver.findElement(By.id("name")).clear();
-		driver.findElement(By.id("name")).sendKeys("박재성");
-		driver.findElement(By.id("email")).clear();
-		driver.findElement(By.id("email")).sendKeys("javajigi@gmail.com");
-		driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
+		조작_입력("#userId", userId);
+		조작_입력("#password", password);
+		조작_입력("#name", "박재성");
+		조작_입력("#email", "javajigi@gmail.com");
+		조작_클릭("button.btn.btn-primary");
 	}
 
 	public void goJoin() {
-		WebElement element = driver.findElement(By.linkText("회원가입"));
-		element.click();
-		assertThat(driver.getTitle(), is("SLiPP :: 회원가입"));
+		조작_클릭(By.linkText("회원가입"));
+		검증_타이틀("SLiPP :: 회원가입");
 	}
 
 	public void goIndex() {
-		driver.get("http://localhost:8080/");
-		assertThat(driver.getTitle(), is("SLiPP"));
+		조작_이동("http://localhost:8080/","SLiPP");
 	}
 }
