@@ -1,22 +1,14 @@
 package net.slipp.support;
 
-import org.junit.After;
 import org.junit.Before;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class AbstractBaseAT {
-	protected WebDriver driver;
+	protected SharedDriver driver;
 
 	@Before
 	public void setup() {
-		// System.setProperty("webdriver.firefox.bin", "D:\\tools\\firefox\\firefox.exe");
-		driver = new FirefoxDriver();
+		driver = new SharedDriver();
+		driver.deleteAllCookies();
 		driver.manage().window().maximize();
-	}
-	
-	@After
-	public void teardown() {
-		driver.quit();
 	}
 }
