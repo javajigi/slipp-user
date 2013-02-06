@@ -32,6 +32,7 @@ public class UserJoinHandler implements Handler {
 			request.setAttribute("result", userId + " 계정으로 회원가입 완료되었습니다.");
 		} catch(ExistedUserException e){
 			request.setAttribute("result", e.getMessage());
+			request.setAttribute("error", true);
 		}
 		
 		return "/user/join_action.jsp";

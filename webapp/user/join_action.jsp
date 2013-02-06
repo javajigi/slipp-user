@@ -22,12 +22,9 @@
 				<div class="page-header">
 					<h1>회원가입</h1>
 				</div>
-				<div class="messageForm">
+				<div class="${error?'error':'messageForm'}">
 					<p>${result}</p>
 				</div>
-				<!-- 
-				<div class="error">
-				</div>	-->
 			</div>
 		</div>
 	</div>
