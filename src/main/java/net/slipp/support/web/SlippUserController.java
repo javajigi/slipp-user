@@ -44,7 +44,6 @@ public class SlippUserController extends HttpServlet {
 	}
 
 	private Handler handlerMapping(HttpServletRequest request) {
-
 		String url = (String) request.getRequestURI();
 		Handler handler = null;
 		
@@ -58,8 +57,12 @@ public class SlippUserController extends HttpServlet {
 	}
 	
 	protected void dispatch(HttpServletRequest request, HttpServletResponse response, String viewPage) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
+		
+		if (null != request.getAttribute("errorMessage") || null != request.getAttribute("result")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+			dispatcher.forward(request, response);
+			return;
+		}
+		response.sendRedirect(viewPage);
 	}
-	
 }

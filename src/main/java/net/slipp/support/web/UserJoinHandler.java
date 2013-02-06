@@ -29,7 +29,7 @@ public class UserJoinHandler implements Handler {
 //			String userId = user.getUserId();
 	
 			String userId = ServiceFactory.getUserService().join(user).getUserId();
-			request.setAttribute("result", userId + " 계정으로 회원가입 완료되었습니다.");
+			request.getSession().setAttribute("result", userId + " 계정으로 회원가입 완료되었습니다.");
 		} catch(ExistedUserException e){
 			request.setAttribute("result", e.getMessage());
 		}
