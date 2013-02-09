@@ -16,7 +16,7 @@ public class UserLoginHandler implements Handler {
 			throws FileNotFoundException, ConfigurationException, SQLException,
 			PropertyVetoException {
 		try {
-			request.getSession().setAttribute(
+			request.setAttribute(
     				"loginUser",
     				ServiceFactory.getUserService().login(
     						request.getParameter("userId"), 
@@ -27,7 +27,7 @@ public class UserLoginHandler implements Handler {
     		return "/user/login.jsp";
     	}
  
-		return "/";
+		return "redirect:/";
 	}
 
 }

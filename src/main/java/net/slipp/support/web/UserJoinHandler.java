@@ -23,13 +23,8 @@ public class UserJoinHandler implements Handler {
 				request.getParameter("email"));
 		
 		try {
-//		Question. 이럴 땐, 한 줄로? 세 줄로? 코딩... 어떤게 더 보기 편한 것일까?
-//			UserService userService = ServiceFactory.getUserService();
-//			User user = userService.join(user);
-//			String userId = user.getUserId();
-	
 			String userId = ServiceFactory.getUserService().join(user).getUserId();
-			request.getSession().setAttribute("result", userId + " 계정으로 회원가입 완료되었습니다.");
+			request.setAttribute("result", userId + " 계정으로 회원가입 완료되었습니다.");
 		} catch(ExistedUserException e){
 			request.setAttribute("result", e.getMessage());
 		}
