@@ -56,6 +56,11 @@ public class SlippUserController extends HttpServlet {
 	}
 	
 	protected void dispatch(HttpServletRequest request, HttpServletResponse response, String viewPage) throws ServletException, IOException {
+		if (viewPage.startsWith("redirect:")) {
+			response.sendRedirect(viewPage.split("redirect:")[1]);
+			return;
+		}
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
