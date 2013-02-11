@@ -43,17 +43,16 @@ public class SlippUserController extends HttpServlet {
 		}
 	}
 
-	private Handler handlerMapping(HttpServletRequest request) {
+	private Handler handlerMapping(HttpServletRequest request) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		String url = (String) request.getRequestURI();
-		Handler handler = null;
 		
-		if (url.endsWith("/login.do")) {
-			handler = new UserLoginHandler();
-		} else if (url.endsWith("/join.do")) {
-			handler = new UserJoinHandler();
-		}
+		StringBuffer clsName = new StringBuffer("net.slipp.support.web.User");
+		clsName.append(url.substring(url.lastIndexOf("/")+1, url.lastIndexOf(".")));
+		clsName.append("Handler");
 		
-		return handler;
+		Class handler = Class.forName(clsName.toString());
+		
+		return (Handler) handler.newInstance();
 	}
 	
 	protected void dispatch(HttpServletRequest request, HttpServletResponse response, String viewPage) throws ServletException, IOException {
