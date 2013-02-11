@@ -14,8 +14,8 @@
               <li><a href="/">Home</a></li>
               <c:choose>
               <c:when test="${empty loginUser}">
-              <li><a href="/user/login.jsp">로그인</a></li>
-              <li><a href="/user/join.jsp">회원가입</a></li>              
+              <li><a href="/user/LoginForm.do">로그인</a></li>
+              <li><a href="/user/JoinForm.do">회원가입</a></li>              
               </c:when>
               <c:otherwise>
               <li><a href="/user/logout_action.jsp">로그아웃</a></li>
