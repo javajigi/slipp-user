@@ -9,9 +9,15 @@ public class UserReflectionTest {
 	@Test
 	public void handlerMappingTest() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
-		request.setRequestURI("/user/Login.do");
 		
+		request.setRequestURI("/user/LoginForm.do");
+		assertEquals(UserLoginFormHandler.class.getName(), getHandlerName(request));
+		
+		request.setRequestURI("/user/Login.do");
 		assertEquals(UserLoginHandler.class.getName(), getHandlerName(request));
+		
+		request.setRequestURI("/user/JoinForm.do");
+		assertEquals(UserJoinFormHandler.class.getName(), getHandlerName(request));
 		
 		request.setRequestURI("/user/Join.do");
 		assertEquals(UserJoinHandler.class.getName(), getHandlerName(request));
