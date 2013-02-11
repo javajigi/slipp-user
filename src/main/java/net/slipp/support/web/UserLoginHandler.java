@@ -16,7 +16,7 @@ public class UserLoginHandler implements Handler {
 			throws FileNotFoundException, ConfigurationException, SQLException,
 			PropertyVetoException {
 		try {
-			request.setAttribute(
+			request.getSession().setAttribute(
     				"loginUser",
     				ServiceFactory.getUserService().login(
     						request.getParameter("userId"), 
