@@ -97,7 +97,7 @@ public class UserAT extends AbstractBaseAT {
 	}
 	
 	private void expectedAlreadyExistedErrorMessage(String userId) {
-		검증_텍스트("div.error",userId + "는 이미 존재하는 아이디입니다.");
+		검증_텍스트("div.messageForm",userId + "는 이미 존재하는 아이디입니다.");
 	}
 
 	public void verifyCompletedJoin(String userId) {
