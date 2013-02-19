@@ -57,10 +57,10 @@
 	<servlet>
 		<servlet-name>slipp-user</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>slipp-user</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern> <!-- 문수주석 : 모든 url 을 dispatcher servlet 에 태우도록 합니다. 이게 맞을까요?? -->
 	</servlet-mapping>
 </web-app>

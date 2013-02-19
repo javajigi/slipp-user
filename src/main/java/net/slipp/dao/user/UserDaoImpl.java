@@ -2,8 +2,6 @@ package net.slipp.dao.user;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -38,7 +36,7 @@ public class UserDaoImpl implements UserDao{
 	public User findByUserId(final String userId) {
 		String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
 		try{
-			return (User)jdbctemplate.queryForObject(sql, new Object[]{userId}, new RowMapper<User>() {
+			return jdbctemplate.queryForObject(sql, new Object[]{userId}, new RowMapper<User>() {
 				@Override
 				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 					return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));

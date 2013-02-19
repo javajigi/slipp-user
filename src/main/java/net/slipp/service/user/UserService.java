@@ -20,7 +20,7 @@ public class UserService {
 	@Qualifier("userDao")
 	private UserDao userDao;
 	
-	public User join(User user) throws SQLException, ExistedUserException, PropertyVetoException {
+	public User join(User user) throws ExistedUserException {
 		log.debug("User : {}", user);
 		User existedUser = userDao.findByUserId(user.getUserId());
 		if (existedUser != null) {

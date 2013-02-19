@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="net.slipp.domain.user.*" %>
 <%@ page import="net.slipp.service.user.*" %>
-<%
+<%--
 User user = (User)session.getAttribute("loginUser");
-%>
+--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,11 +24,11 @@ User user = (User)session.getAttribute("loginUser");
 					<h1>회원가입</h1>
 				</div>
 				<form class="form-horizontal" action="/user/update_action.jsp" method="post">
-					<input type="hidden" name="userId" value="<%= user.getUserId() %>" />
+					<input type="hidden" name="userId" value="${loginUser.userId}" />
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
-							<%= user.getUserId() %>
+							${loginUser.userId }
 						</div>
 					</div>
 					<div class="control-group">
@@ -40,13 +40,13 @@ User user = (User)session.getAttribute("loginUser");
 					<div class="control-group">
 						<label class="control-label" for="name">이름</label>
 						<div class="controls">
-							<input type="text" id="name" name="name" placeholder="" value="<%= user.getName() %>" />
+							<input type="text" id="name" name="name" placeholder="" value="${loginUser.name}" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="email">이메일</label>
 						<div class="controls">
-							<input type="text" id="email" name="email" placeholder="" value="<%= user.getEmail() %>" />
+							<input type="text" id="email" name="email" placeholder="" value="${loginUser.email}" />
 						</div>
 					</div>
 					<div class="control-group">
