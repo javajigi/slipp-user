@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.naming.ConfigurationException;
 import javax.servlet.http.HttpServletRequest;
 
+import net.slipp.domain.user.User;
 import net.slipp.service.user.PasswordMismatchException;
 import net.slipp.service.user.UserService;
 
@@ -24,19 +25,15 @@ public class UserLogin{
 	@RequestMapping("/user/Login.do")
 	public ModelAndView excute(HttpServletRequest request)
 			throws FileNotFoundException, ConfigurationException, SQLException, PropertyVetoException {
-		ModelAndView mav = new ModelAndView("redirect:/");
+		ModelAndView mav = new ModelAndView("/index.jsp");
 		try {
-			request.getSession().setAttribute(
-    				"loginUser",
-    				this.userService.login(
-    						request.getParameter("userId"), 
-    						request.getParameter("password")));
- 
+			User user = userService.login(request.getParameter("userId"), request.getParameter("password"));
+			request.getSession().setAttribute("loginUser", user);
     	} catch (PasswordMismatchException e) {
+    		e.printStackTrace();
     		mav = new ModelAndView("/user/login.jsp");
     		mav.addObject("errorMessage", e.getMessage());
     	}
 		return mav;
 	}
-
 }

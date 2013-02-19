@@ -1,23 +1,42 @@
 package net.slipp.dao.user;
 
 import java.beans.PropertyVetoException;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
+
+import javax.naming.ConfigurationException;
 
 import org.springframework.stereotype.Repository;
 
 import net.slipp.domain.user.User;
+import net.slipp.support.ConfigManager;
 import net.slipp.support.jdbc.ConnectionManager;
+import net.slipp.support.jdbc.H2ConnectionManagerImpl;
+import net.slipp.support.jdbc.MySQLConnectionManagerImpl;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao{
 	ConnectionManager connectionManager;
 	
-	public UserDaoImpl(){}
-	public UserDaoImpl (ConnectionManager connectionManager) {
-		this.connectionManager = connectionManager;
+	public UserDaoImpl() throws FileNotFoundException, ConfigurationException{
+		Map<String, Object> config = ConfigManager.getDatabaseConfig();
+		if(config == null)
+			throw new ConfigurationException("해당 config 없음요!");
+		connectionManager = getConnectionManager(config);
+	}
+	
+	private static ConnectionManager getConnectionManager(Map<String, Object> config){
+		ConnectionManager connectionManager = null;
+		String adapter = (String)config.get("adapter");
+		if(adapter.equals("h2"))
+			connectionManager = new H2ConnectionManagerImpl(config);
+		else if(adapter.equals("mysql"))
+			connectionManager = new MySQLConnectionManagerImpl(config);
+		return connectionManager;
 	}
 	
 	public void insert(final User user) throws SQLException, PropertyVetoException {
@@ -54,7 +73,7 @@ public class UserDaoImpl implements UserDao{
 	                    rs.getString("email"));
 			};
 		};
-		String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
+		String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
 		return (User)template.select(sql,pss,rowMapper);
 	}
 

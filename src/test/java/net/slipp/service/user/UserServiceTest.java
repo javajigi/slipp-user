@@ -10,9 +10,7 @@ import java.sql.SQLException;
 
 import javax.naming.ConfigurationException;
 
-import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
-import net.slipp.factory.DaoFactory;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +22,6 @@ public class UserServiceTest {
 	
 	@Before
 	public void setUp() throws SQLException, ExistedUserException, PropertyVetoException, FileNotFoundException, ConfigurationException {
-		UserDao userDao = DaoFactory.getUserDao();
 		userService = new UserService();
 		
 		user = new User("userId1", "password", "name", "javajigi@email.com");

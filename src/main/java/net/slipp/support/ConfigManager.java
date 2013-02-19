@@ -22,7 +22,8 @@ public class ConfigManager {
 	}
 	
 	public static String getEnvironment() {
-		return System.getProperty("MYENVIRONMENT","development");
+		//return System.getProperty("MYENVIRONMENT","development");
+		return System.getProperty("MYENVIRONMENT","production");
 	}
 	
 	private static void loadConfiguration() {

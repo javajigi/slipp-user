@@ -11,14 +11,18 @@ import net.slipp.domain.user.User;
 import net.slipp.service.user.ExistedUserException;
 import net.slipp.service.user.UserService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserJoin {
 	
+	@Autowired
 	private UserService userService;
 	
+	@RequestMapping("/user/Join.do")
 	public ModelAndView excute(HttpServletRequest request) 
 			throws FileNotFoundException, ConfigurationException, SQLException, 
 			PropertyVetoException {
@@ -28,14 +32,12 @@ public class UserJoin {
 				request.getParameter("password"),
 				request.getParameter("name"),
 				request.getParameter("email"));
-		
 		try {
-			String userId = this.userService.join(user).getUserId();
+			String userId = userService.join(user).getUserId();
 			mav.addObject("result", userId + " 계정으로 회원가입 완료되었습니다.");
 		} catch(ExistedUserException e){
 			mav.addObject("result", e.getMessage());
 		}
-		
 		return mav;
 	}
 }

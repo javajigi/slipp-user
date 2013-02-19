@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="net.slipp.domain.user.*" %>
 <%@ page import="net.slipp.service.user.*" %>
-<%@ page import="net.slipp.factory.*" %>
 <%
 	User user = new User(
 			request.getParameter("userId"), 
