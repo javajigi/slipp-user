@@ -6,16 +6,23 @@ import java.sql.SQLException;
 
 import javax.naming.ConfigurationException;
 import javax.servlet.http.HttpServletRequest;
-import net.slipp.domain.user.User;
-import net.slipp.factory.ServiceFactory;
-import net.slipp.service.user.ExistedUserException;
 
-public class UserJoinHandler implements Handler {
-	@Override
-	public String excute(HttpServletRequest request) 
+import net.slipp.domain.user.User;
+import net.slipp.service.user.ExistedUserException;
+import net.slipp.service.user.UserService;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class UserJoin {
+	
+	private UserService userService;
+	
+	public ModelAndView excute(HttpServletRequest request) 
 			throws FileNotFoundException, ConfigurationException, SQLException, 
 			PropertyVetoException {
-		
+		ModelAndView mav = new ModelAndView("/user/join_action.jsp");
 		User user = new User(
 				request.getParameter("userId"), 
 				request.getParameter("password"),
@@ -23,12 +30,12 @@ public class UserJoinHandler implements Handler {
 				request.getParameter("email"));
 		
 		try {
-			String userId = ServiceFactory.getUserService().join(user).getUserId();
-			request.setAttribute("result", userId + " 계정으로 회원가입 완료되었습니다.");
+			String userId = this.userService.join(user).getUserId();
+			mav.addObject("result", userId + " 계정으로 회원가입 완료되었습니다.");
 		} catch(ExistedUserException e){
-			request.setAttribute("result", e.getMessage());
+			mav.addObject("result", e.getMessage());
 		}
 		
-		return "/user/join_action.jsp";
+		return mav;
 	}
 }

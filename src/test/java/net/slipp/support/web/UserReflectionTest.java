@@ -11,16 +11,16 @@ public class UserReflectionTest {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		
 		request.setRequestURI("/user/LoginForm.do");
-		assertEquals(UserLoginFormHandler.class.getName(), getHandlerName(request));
+		assertEquals(UserLoginForm.class.getName(), getHandlerName(request));
 		
 		request.setRequestURI("/user/Login.do");
-		assertEquals(UserLoginHandler.class.getName(), getHandlerName(request));
+		assertEquals(UserLogin.class.getName(), getHandlerName(request));
 		
 		request.setRequestURI("/user/JoinForm.do");
-		assertEquals(UserJoinFormHandler.class.getName(), getHandlerName(request));
+		assertEquals(UserJoinForm.class.getName(), getHandlerName(request));
 		
 		request.setRequestURI("/user/Join.do");
-		assertEquals(UserJoinHandler.class.getName(), getHandlerName(request));
+		assertEquals(UserJoin.class.getName(), getHandlerName(request));
 	}
 
 	private String getHandlerName(MockHttpServletRequest request) {

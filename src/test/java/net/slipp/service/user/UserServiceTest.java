@@ -25,7 +25,7 @@ public class UserServiceTest {
 	@Before
 	public void setUp() throws SQLException, ExistedUserException, PropertyVetoException, FileNotFoundException, ConfigurationException {
 		UserDao userDao = DaoFactory.getUserDao();
-		userService = new UserService(userDao);
+		userService = new UserService();
 		
 		user = new User("userId1", "password", "name", "javajigi@email.com");
 		userService.join(user);

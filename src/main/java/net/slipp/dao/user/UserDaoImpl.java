@@ -6,12 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Repository;
+
 import net.slipp.domain.user.User;
 import net.slipp.support.jdbc.ConnectionManager;
 
+@Repository("userDao")
 public class UserDaoImpl implements UserDao{
 	ConnectionManager connectionManager;
 	
+	public UserDaoImpl(){}
 	public UserDaoImpl (ConnectionManager connectionManager) {
 		this.connectionManager = connectionManager;
 	}

@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import org.springframework.stereotype.Repository;
+
 import net.slipp.domain.user.User;
 
+@Repository("testUserDao")
 public class TestUserDaoImpl implements UserDao{
 	HashMap<String, User> db = new HashMap<String, User>();
 

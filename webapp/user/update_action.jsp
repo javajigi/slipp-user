@@ -9,7 +9,7 @@
 			request.getParameter("password"),
 			request.getParameter("name"),
 			request.getParameter("email"));
-	UserService userService = ServiceFactory.getUserService();
+	UserService userService = new UserService();
 	userService.update(user);
 	
 	response.sendRedirect("/");

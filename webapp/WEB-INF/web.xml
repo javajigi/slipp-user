@@ -39,10 +39,24 @@
 		<url-pattern>/admin/h2/*</url-pattern>
 	</servlet-mapping>
 	
-	<!--  UserServlet for mapping the join and login -->
+	<!-- spring framework -->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/slipp-user-model.xml
+			/WEB-INF/slipp-user-service.xml
+			/WEB-INF/slipp-user-servlet.xml
+		</param-value>
+	</context-param>
 	<servlet>
 		<servlet-name>slipp-user</servlet-name>
-		<servlet-class>net.slipp.support.web.SlippUserController</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>slipp-user</servlet-name>

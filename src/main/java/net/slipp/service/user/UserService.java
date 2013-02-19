@@ -8,14 +8,15 @@ import net.slipp.domain.user.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
-	private UserDao userDao = null;
 	
-	public UserService(UserDao userDao) {
-		this.userDao = userDao;
-	}
+	@Autowired
+	private UserDao userDao;
 	
 	public User join(User user) throws SQLException, ExistedUserException, PropertyVetoException {
 		log.debug("User : {}", user);
@@ -23,7 +24,7 @@ public class UserService {
 		if (existedUser != null) {
 			throw new ExistedUserException(user.getUserId());
 		}
-
+		
 		userDao.insert(user);
 		return user;
 	}
