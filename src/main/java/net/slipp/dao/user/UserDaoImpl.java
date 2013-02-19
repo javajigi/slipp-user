@@ -1,97 +1,62 @@
 package net.slipp.dao.user;
 
-import java.beans.PropertyVetoException;
-import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
-import javax.naming.ConfigurationException;
-
-import org.springframework.stereotype.Repository;
+import javax.sql.DataSource;
 
 import net.slipp.domain.user.User;
-import net.slipp.support.ConfigManager;
-import net.slipp.support.jdbc.ConnectionManager;
-import net.slipp.support.jdbc.H2ConnectionManagerImpl;
-import net.slipp.support.jdbc.MySQLConnectionManagerImpl;
 
-@Repository("userDao")
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+
 public class UserDaoImpl implements UserDao{
-	ConnectionManager connectionManager;
+
+	private JdbcTemplate jdbctemplate;
 	
-	public UserDaoImpl() throws FileNotFoundException, ConfigurationException{
-		Map<String, Object> config = ConfigManager.getDatabaseConfig();
-		if(config == null)
-			throw new ConfigurationException("해당 config 없음요!");
-		connectionManager = getConnectionManager(config);
+	public UserDaoImpl(){}
+	
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		jdbctemplate = new JdbcTemplate(dataSource);
 	}
 	
-	private static ConnectionManager getConnectionManager(Map<String, Object> config){
-		ConnectionManager connectionManager = null;
-		String adapter = (String)config.get("adapter");
-		if(adapter.equals("h2"))
-			connectionManager = new H2ConnectionManagerImpl(config);
-		else if(adapter.equals("mysql"))
-			connectionManager = new MySQLConnectionManagerImpl(config);
-		return connectionManager;
-	}
-	
-	public void insert(final User user) throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		
+	public void insert(final User user) {
 		String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-		template.update(sql,user.getUserId(),user.getPassword(),user.getName(),user.getEmail());
+		jdbctemplate.update(sql,user.getUserId(),user.getPassword(),user.getName(),user.getEmail());
 	}
 	
 	@Override
-    public void update(User user) throws SQLException, PropertyVetoException {
-        JdbcTemplate template = new JdbcTemplate(connectionManager);
-        
+    public void update(User user) {
         String sql = "UPDATE USERS SET name=?, email=? WHERE userId = ?";
-        template.update(sql,user.getName(),user.getEmail(),user.getUserId());
+        jdbctemplate.update(sql,user.getName(),user.getEmail(),user.getUserId());
     }
 
-	public User findByUserId(final String userId) throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		
-		PreparedStatementSetter pss = new PreparedStatementSetter(){
-			public void setValue(PreparedStatement pstmt) throws SQLException{
-				pstmt.setString(1, userId);
-			}
-		};
-		
-		RowMapper<User> rowMapper = new RowMapper<User>(){
-			@Override
-			public User setResultSet(ResultSet rs) throws SQLException {
-				return new User(
-	                    rs.getString("userId"), 
-	                    rs.getString("password"), 
-	                    rs.getString("name"),
-	                    rs.getString("email"));
-			};
-		};
+	public User findByUserId(final String userId) {
 		String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
-		return (User)template.select(sql,pss,rowMapper);
+		try{
+			return (User)jdbctemplate.queryForObject(sql, new Object[]{userId}, new RowMapper<User>() {
+				@Override
+				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+					return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
+				}
+			});
+		}catch(EmptyResultDataAccessException e){
+			return null;
+		}
 	}
 
-	public void deleteAllUser() throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		
+	public void deleteAllUser() {
 		String sql = "DELETE FROM USERS";
-		template.update(sql);
-	}
-
-	public Connection getConnection() throws SQLException, PropertyVetoException {
-		return connectionManager.getConnection();
+		jdbctemplate.update(sql);
 	}
 
 	@Override
-	public int countUser() throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
+	public int countUser() {
 		String sql = "select count(*) FROM USERS";
-		return template.queryForInt(sql);
+		return jdbctemplate.queryForInt(sql);
 	}
 }

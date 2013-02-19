@@ -13,7 +13,7 @@ public class UserAT extends AbstractBaseAT {
 		String userId = "javajigi";
 		회원가입(userId, "password");
 	}
-
+	
 	private void 회원가입(String userId, String password) {
 		// given
 		goIndex();
