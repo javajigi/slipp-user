@@ -3,9 +3,11 @@ package net.slipp.controller;
 import java.beans.PropertyVetoException;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 
 import javax.naming.ConfigurationException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.slipp.domain.user.User;
 import net.slipp.service.user.ExistedUserException;

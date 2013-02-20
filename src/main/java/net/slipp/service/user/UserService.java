@@ -34,7 +34,6 @@ public class UserService {
 	public User update(User user) throws SQLException, PropertyVetoException {
 	    User existedUser = userDao.findByUserId(user.getUserId());
 	    userDao.update(user);
-	    existedUser = userDao.findByUserId(user.getUserId());
 	    return existedUser;
 	}
 
