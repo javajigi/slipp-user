@@ -1,13 +1,15 @@
 package net.slipp.user;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import net.slipp.support.AbstractBaseAT;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 
 public class UserAT extends AbstractBaseAT {
+	
 	@Test
 	public void 정상적인_회원가입() {
 		String userId = "javajigi";

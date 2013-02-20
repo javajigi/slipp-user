@@ -11,6 +11,7 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:component-scan base-package="net.slipp.controller" />
 	<mvc:annotation-driven/>
+	<mvc:resources location="/stylesheets/" mapping="/stylesheets/**"/>
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/"/>
 		<property name="suffix" value=".jsp"/>

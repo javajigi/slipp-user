@@ -56,7 +56,15 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user/LoginForm.do")
-	public ModelAndView excuteGetLoginForm(HttpServletRequest request){
-		return new ModelAndView("/user/login");
+	public String excuteGetLoginForm(HttpServletRequest request){
+		return "/user/login";
+	}
+	
+	@RequestMapping("/user/update.do")
+	public ModelAndView executeUpdate(HttpServletRequest request, @ModelAttribute User user) throws SQLException, PropertyVetoException{
+		ModelAndView mav = new ModelAndView("redirect:/user/update.jsp");
+		user = userService.update(user);
+		request.getSession().setAttribute("loginUser", user);
+		return mav;
 	}
 }
