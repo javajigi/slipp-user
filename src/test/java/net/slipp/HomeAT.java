@@ -11,6 +11,5 @@ public class HomeAT extends AbstractBaseAT {
 	public void index() {
 		조작_이동("http://localhost:8080");
 		assertThat(driver.getTitle(), is("SLiPP"));
-	}
-	
+	}	
 }

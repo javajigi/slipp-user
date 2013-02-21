@@ -1,74 +1,51 @@
 package net.slipp.dao.user;
 
-import java.beans.PropertyVetoException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import net.slipp.domain.user.User;
-import net.slipp.support.jdbc.ConnectionManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 
 public class UserDaoImpl implements UserDao{
-	ConnectionManager connectionManager;
 	
-	public UserDaoImpl (ConnectionManager connectionManager) {
-		this.connectionManager = connectionManager;
+	private JdbcTemplate jdbcTemplate;
+	
+	public UserDaoImpl(){}
+	
+	@Autowired
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
-	
-	public void insert(final User user) throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		
+
+	public void insert(final User user) {
 		String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-		template.update(sql,user.getUserId(),user.getPassword(),user.getName(),user.getEmail());
+		jdbcTemplate.update(sql,user.getUserId(),user.getPassword(),user.getName(),user.getEmail());
 	}
 	
 	@Override
-    public void update(User user) throws SQLException, PropertyVetoException {
-        JdbcTemplate template = new JdbcTemplate(connectionManager);
-        
+    public void update(User user) {
         String sql = "UPDATE USERS SET name=?, email=? WHERE userId = ?";
-        template.update(sql,user.getName(),user.getEmail(),user.getUserId());
+        jdbcTemplate.update(sql,user.getName(),user.getEmail(),user.getUserId());
     }
 
-	public User findByUserId(final String userId) throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		
-		PreparedStatementSetter pss = new PreparedStatementSetter(){
-			public void setValue(PreparedStatement pstmt) throws SQLException{
-				pstmt.setString(1, userId);
-			}
-		};
-		
-		RowMapper<User> rowMapper = new RowMapper<User>(){
-			@Override
-			public User setResultSet(ResultSet rs) throws SQLException {
-				return new User(
-	                    rs.getString("userId"), 
-	                    rs.getString("password"), 
-	                    rs.getString("name"),
-	                    rs.getString("email"));
-			};
-		};
-		String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
-		return (User)template.select(sql,pss,rowMapper);
+	public User findByUserId(final String userId) {
+		String sql = "SELECT userId, password, name, email FROM USERS WHERE userId=?";
+		try{
+			return jdbcTemplate.queryForObject(sql, new Object[]{userId}, ParameterizedBeanPropertyRowMapper.newInstance(User.class) );
+		}catch(EmptyResultDataAccessException e){
+			return null;
+		}
 	}
 
-	public void deleteAllUser() throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
-		
+	public void deleteAllUser() {
 		String sql = "DELETE FROM USERS";
-		template.update(sql);
-	}
-
-	public Connection getConnection() throws SQLException, PropertyVetoException {
-		return connectionManager.getConnection();
+		jdbcTemplate.update(sql);
 	}
 
 	@Override
-	public int countUser() throws SQLException, PropertyVetoException {
-		JdbcTemplate template = new JdbcTemplate(connectionManager);
+	public int countUser() {
 		String sql = "select count(*) FROM USERS";
-		return template.queryForInt(sql);
+		return jdbcTemplate.queryForInt(sql);
 	}
 }

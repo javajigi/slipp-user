@@ -1,41 +1,43 @@
 package net.slipp.service.user;
 
-import java.beans.PropertyVetoException;
-import java.sql.SQLException;
-
 import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
-	private UserDao userDao = null;
 	
-	public UserService(UserDao userDao) {
-		this.userDao = userDao;
-	}
+	@Autowired
+	@Qualifier("userDao")
+	private UserDao userDao;
 	
-	public User join(User user) throws SQLException, ExistedUserException, PropertyVetoException {
+	public User join(User user) throws ExistedUserException {
 		log.debug("User : {}", user);
 		User existedUser = userDao.findByUserId(user.getUserId());
 		if (existedUser != null) {
 			throw new ExistedUserException(user.getUserId());
 		}
-
+		
 		userDao.insert(user);
 		return user;
 	}
 	
-	public User update(User user) throws SQLException, PropertyVetoException {
+	public User update(User user) throws NotFoundExistedUserException {
 	    User existedUser = userDao.findByUserId(user.getUserId());
+	    if(existedUser == null) {
+	    	throw new NotFoundExistedUserException(user.getUserId());
+	    }
 	    userDao.update(user);
-	    
-	    return existedUser;
+	    return user;
 	}
 
-	public User login(String userId, String password) throws SQLException, PasswordMismatchException, PropertyVetoException {
+	public User login(String userId, String password) throws PasswordMismatchException {
 		User user = userDao.findByUserId(userId);
 		if (user == null) {
 			throw new PasswordMismatchException();
@@ -48,11 +50,11 @@ public class UserService {
 		return user;
 	}
 
-	public User findByUserId(String userId) throws SQLException, PropertyVetoException {
+	public User findByUserId(String userId) {
 		return userDao.findByUserId(userId);
 	}
 
-	public void deleteAllUser() throws SQLException, PropertyVetoException {
+	public void deleteAllUser() {
 		userDao.deleteAllUser();
 	}
 }
