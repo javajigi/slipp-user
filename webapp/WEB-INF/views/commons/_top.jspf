@@ -11,7 +11,7 @@
           <a class="brand" href="/">지속가능한 삶, 프로그래밍, 프로그래머</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="/">Home</a></li>
+              <li><a href="<c:url value="/"/>">Home</a></li>
               <c:choose>
               <c:when test="${empty loginUser}">
               <li><a href="/user/login.do">로그인</a></li>
