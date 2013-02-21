@@ -2,11 +2,9 @@ package net.slipp.dao.user;
 
 import java.util.HashMap;
 
-import javax.sql.DataSource;
+import net.slipp.domain.user.User;
 
 import org.springframework.stereotype.Repository;
-
-import net.slipp.domain.user.User;
 
 @Repository
 public class TestUserDaoImpl implements UserDao{
@@ -36,8 +34,4 @@ public class TestUserDaoImpl implements UserDao{
     public void update(User user) {
         db.put(user.getUserId(), user);
     }
-
-	@Override
-	public void setDataSource(DataSource dataSource) {
-	}
 }

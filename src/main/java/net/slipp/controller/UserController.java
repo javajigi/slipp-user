@@ -1,72 +1,71 @@
 package net.slipp.controller;
 
-import java.beans.PropertyVetoException;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
-import java.util.Enumeration;
-
-import javax.naming.ConfigurationException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.slipp.domain.user.User;
 import net.slipp.service.user.ExistedUserException;
+import net.slipp.service.user.NotFoundExistedUserException;
 import net.slipp.service.user.PasswordMismatchException;
 import net.slipp.service.user.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("/user/Join.do")
-	public ModelAndView excuteJoin(HttpServletRequest request, @ModelAttribute User user) {
-		ModelAndView mav = new ModelAndView("/user/join_action");
+	@RequestMapping(value="/join",method=RequestMethod.POST)
+	public String excuteJoin(HttpServletRequest request, @ModelAttribute User user, Model model) {
 		try {
 			String userId = userService.join(user).getUserId();
-			mav.addObject("result", userId + " 계정으로 회원가입 완료되었습니다.");
+			model.addAttribute("result", userId + " 계정으로 회원가입 완료되었습니다.");
 		} catch(ExistedUserException e){
-			mav.addObject("result", e.getMessage());
+			model.addAttribute("result", e.getMessage());
 		}
-		return mav;
+		return "/user/join_action";
 	}
 	
-	@RequestMapping("/user/JoinForm.do")
+	@RequestMapping(value="/join",method=RequestMethod.GET)
 	public String excuteGetJoinForm(HttpServletRequest request) {
 		return "/user/join";
 	}
 	
-	@RequestMapping("/user/Login.do")
-	public ModelAndView excuteLogin(HttpServletRequest request)
-			throws FileNotFoundException, ConfigurationException, SQLException, PropertyVetoException {
-		ModelAndView mav = new ModelAndView("/index");
+	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	public String excuteLogin(HttpServletRequest request, @ModelAttribute User user, Model model) {
 		try {
-			User user = userService.login(request.getParameter("userId"), request.getParameter("password"));
+			user = userService.login(user.getUserId(), user.getPassword());
 			request.getSession().setAttribute("loginUser", user);
     	} catch (PasswordMismatchException e) {
-    		e.printStackTrace();
-    		mav = new ModelAndView("/user/login");
-    		mav.addObject("errorMessage", e.getMessage());
+    		model.addAttribute("errorMessage", e.getMessage());
+    		return "/user/login";
     	}
-		return mav;
+		return "/index";
 	}
 	
-	@RequestMapping("/user/LoginForm.do")
+	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public String excuteGetLoginForm(HttpServletRequest request){
 		return "/user/login";
 	}
 	
-	@RequestMapping("/user/update.do")
-	public ModelAndView executeUpdate(HttpServletRequest request, @ModelAttribute User user) throws SQLException, PropertyVetoException{
-		ModelAndView mav = new ModelAndView("redirect:/user/update.jsp");
-		user = userService.update(user);
+	@RequestMapping(value="/update.do", method=RequestMethod.POST)
+	public String executeUpdate(HttpServletRequest request, @ModelAttribute User user, Model model) {
+		try {
+			user = userService.update(user);
+		} catch (NotFoundExistedUserException e) {
+			return "redirect:/user/login.do";
+		}
 		request.getSession().setAttribute("loginUser", user);
-		return mav;
+		return "/user/update";
+	}
+	@RequestMapping(value="/update.do", method=RequestMethod.GET)
+	public String executeGetUpdateForm() {
+		return "/user/update";
 	}
 }

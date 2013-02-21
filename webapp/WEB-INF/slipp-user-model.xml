@@ -18,8 +18,10 @@
 		<property name="user" value="root" />
 		<property name="password" value="" />
 	</bean>
-	
-	<bean id="userDao" class="net.slipp.dao.user.UserDaoImpl">
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="userDao" class="net.slipp.dao.user.UserDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 </beans>
