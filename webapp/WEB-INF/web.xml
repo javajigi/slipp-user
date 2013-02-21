@@ -21,7 +21,7 @@
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>    
+	</filter-mapping>
     
 	<!-- H2 Database Console for managing the app's database -->
 	<servlet>
@@ -39,13 +39,28 @@
 		<url-pattern>/admin/h2/*</url-pattern>
 	</servlet-mapping>
 	
-	<!--  UserServlet for mapping the join and login -->
+	<!-- spring framework -->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/slipp-user-model.xml
+			/WEB-INF/slipp-user-service.xml
+			/WEB-INF/slipp-user-servlet.xml
+		</param-value>
+	</context-param>
 	<servlet>
 		<servlet-name>slipp-user</servlet-name>
-		<servlet-class>net.slipp.support.web.SlippUserController</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>slipp-user</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern> <!-- 문수주석 : 모든 url 을 dispatcher servlet 에 태우도록 합니다. 이게 맞을까요?? -->
 	</servlet-mapping>
 </web-app>

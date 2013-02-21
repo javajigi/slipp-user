@@ -2,9 +2,7 @@ package net.slipp.dao.user;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
 import net.slipp.domain.user.User;
-import net.slipp.factory.DaoFactory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +35,7 @@ public class UserDaoTest {
 	
 	@Test
 	public void crudH2() throws Exception {
-		userDao = DaoFactory.getUserDao();
+		userDao = new UserDaoImpl();
 		userDao.deleteAllUser();
 		userDao.insert(expectedUser);
 	
