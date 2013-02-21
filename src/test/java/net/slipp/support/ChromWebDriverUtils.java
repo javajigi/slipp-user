@@ -10,18 +10,15 @@ public class ChromWebDriverUtils {
     private static String getChromeWebDriverFileNameForOS() {
         if (isWindows()) {
             return "chromedriver-win.exe";
-        }
-        if (isMac()) {
+        } else if (isMac()) {
             return "chromedriver-mac";
-        }
-        if (isLinux32()) {
+        } else if (isLinux32()) {
             return "chromedriver-linux32";
-        }
-        if (isLinux64()) {
+        } else if (isLinux64()) {
             return "chromedriver-linux64";
+        } else {
+            throw new RuntimeException("지원하는 OS 가 없습니다.");
         }
-
-        throw new RuntimeException("지원하는 OS 가 없습니다.");
     }
 
     private static boolean isWindows() {
@@ -33,10 +30,10 @@ public class ChromWebDriverUtils {
     }
 
     private static boolean isLinux32() {
-        throw new UnsupportedOperationException("리눅스는 아직 누가 구문을 채워주세용");
+        return (OS.indexOf("linux") >= 0);
     }
 
     private static boolean isLinux64() {
-        throw new UnsupportedOperationException("리눅스는 아직 누가 구문을 채워주세용");
+        return (OS.indexOf("linux") >= 0);
     }
 }
