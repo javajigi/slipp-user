@@ -1,14 +1,13 @@
 package net.slipp.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import net.slipp.domain.user.User;
 import net.slipp.service.user.ExistedUserException;
 import net.slipp.service.user.NotFoundExistedUserException;
-import net.slipp.service.user.PasswordMismatchException;
 import net.slipp.service.user.UserService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	@Autowired
+	
+	private static final String USER_JOIN_ACTION = "/user/join_action";
+	
+	@Resource
 	private UserService userService;
 	
 	@RequestMapping(value="/join",method=RequestMethod.POST)
@@ -29,7 +31,7 @@ public class UserController {
 		} catch(ExistedUserException e){
 			model.addAttribute("result", e.getMessage());
 		}
-		return "/user/join_action";
+		return USER_JOIN_ACTION;
 	}
 	
 	@RequestMapping(value="/join",method=RequestMethod.GET)
@@ -37,34 +39,17 @@ public class UserController {
 		return "/user/join";
 	}
 	
-	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	public String excuteLogin(HttpServletRequest request, @ModelAttribute User user, Model model) {
-		try {
-			user = userService.login(user.getUserId(), user.getPassword());
-			request.getSession().setAttribute("loginUser", user);
-    	} catch (PasswordMismatchException e) {
-    		model.addAttribute("errorMessage", e.getMessage());
-    		return "/user/login";
-    	}
-		return "/index";
-	}
-	
-	@RequestMapping(value="/login.do", method=RequestMethod.GET)
-	public String excuteGetLoginForm(HttpServletRequest request){
-		return "/user/login";
-	}
-	
-	@RequestMapping(value="/update.do", method=RequestMethod.POST)
+	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String executeUpdate(HttpServletRequest request, @ModelAttribute User user, Model model) {
 		try {
 			user = userService.update(user);
 		} catch (NotFoundExistedUserException e) {
-			return "redirect:/user/login.do";
+			return "redirect:/login";
 		}
 		request.getSession().setAttribute("loginUser", user);
-		return "/user/update";
+		return "redirect:/";
 	}
-	@RequestMapping(value="/update.do", method=RequestMethod.GET)
+	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String executeGetUpdateForm() {
 		return "/user/update";
 	}
