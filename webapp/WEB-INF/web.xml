@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	version="2.5"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
 	<display-name>slipp-atdd</display-name>
 	<description>SLiPP ATDD</description>
 
@@ -59,6 +59,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
+				/WEB-INF/spring/slippApp/slipp-user-repository.xml
 				/WEB-INF/spring/slippApp/slipp-user-model.xml
 				/WEB-INF/spring/slippApp/slipp-user-service.xml
 				/WEB-INF/spring/slippApp/slipp-user-servlet.xml
