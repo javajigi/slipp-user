@@ -1,15 +1,14 @@
 package net.slipp.service.user;
 
-import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
 import net.slipp.exception.ExistedUserException;
 import net.slipp.exception.NotFoundExistedUserException;
 import net.slipp.exception.PasswordMismatchException;
+import net.slipp.repository.user.UserRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,31 +16,30 @@ public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
 	
 	@Autowired
-	@Qualifier("userDao")
-	private UserDao userDao;
+	private UserRepository userRepository;
 	
 	public User join(User user) throws ExistedUserException {
 		log.debug("User : {}", user);
-		User existedUser = userDao.findByUserId(user.getUserId());
+		User existedUser = userRepository.findByUserId(user.getUserId());
 		if (existedUser != null) {
 			throw new ExistedUserException(user.getUserId());
 		}
 		
-		userDao.insert(user);
+		userRepository.save(user);
 		return user;
 	}
 	
 	public User update(User user) throws NotFoundExistedUserException {
-	    User existedUser = userDao.findByUserId(user.getUserId());
+	    User existedUser = userRepository.findByUserId(user.getUserId());
 	    if(existedUser == null) {
 	    	throw new NotFoundExistedUserException(user.getUserId());
 	    }
-	    userDao.update(user);
+	    userRepository.save(user);
 	    return user;
 	}
 
 	public User login(String userId, String password) throws PasswordMismatchException {
-		User user = userDao.findByUserId(userId);
+		User user = userRepository.findByUserId(userId);
 		if (user == null) {
 			throw new PasswordMismatchException();
 		}
@@ -54,10 +52,10 @@ public class UserService {
 	}
 
 	public User findByUserId(String userId) {
-		return userDao.findByUserId(userId);
+		return userRepository.findByUserId(userId);
 	}
 
 	public void deleteAllUser() {
-		userDao.deleteAllUser();
+		userRepository.deleteAll();
 	}
 }
