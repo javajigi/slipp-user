@@ -2,6 +2,9 @@ package net.slipp.service.user;
 
 import net.slipp.dao.user.UserDao;
 import net.slipp.domain.user.User;
+import net.slipp.exception.ExistedUserException;
+import net.slipp.exception.NotFoundExistedUserException;
+import net.slipp.exception.PasswordMismatchException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

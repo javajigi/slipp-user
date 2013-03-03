@@ -43,10 +43,10 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>classpath:slipp-user-service.xml</param-value>
+		<param-value>classpath:slipp-user-repsitory.xml</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -59,9 +59,6 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-				/WEB-INF/spring/slippApp/slipp-user-repository.xml
-				/WEB-INF/spring/slippApp/slipp-user-model.xml
-				/WEB-INF/spring/slippApp/slipp-user-service.xml
 				/WEB-INF/spring/slippApp/slipp-user-servlet.xml
 			</param-value>
 		</init-param>

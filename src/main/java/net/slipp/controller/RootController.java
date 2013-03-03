@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import net.slipp.domain.user.User;
-import net.slipp.service.user.PasswordMismatchException;
+import net.slipp.exception.PasswordMismatchException;
 import net.slipp.service.user.UserService;
 
 import org.springframework.stereotype.Controller;

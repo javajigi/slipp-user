@@ -4,8 +4,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import net.slipp.domain.user.User;
-import net.slipp.service.user.ExistedUserException;
-import net.slipp.service.user.NotFoundExistedUserException;
+import net.slipp.exception.ExistedUserException;
+import net.slipp.exception.NotFoundExistedUserException;
 import net.slipp.service.user.UserService;
 
 import org.springframework.stereotype.Controller;
