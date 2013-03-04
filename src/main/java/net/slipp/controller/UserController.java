@@ -1,5 +1,7 @@
 package net.slipp.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.slipp.domain.user.User;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/user")
@@ -55,5 +58,14 @@ public class UserController {
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String executeGetUpdateForm() {
 		return "/user/update";
+	}
+	
+	
+	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	public String findByName( @RequestParam(value="name", required=true)String name, Model model ) {
+		List<User> users = userService.findByUserName(name);
+		
+		model.addAttribute("users", users);
+		return "/user/find";
 	}
 }
