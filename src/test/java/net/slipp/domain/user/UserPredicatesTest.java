@@ -6,8 +6,8 @@ import org.junit.Test;
 import com.mysema.query.types.Predicate;
 
 public class UserPredicatesTest {
-	private static final String SEARCH_TERM = "현기";
-    private static final String EXPECTED_PREDICATE_STRING = "startsWithIgnoreCase(user.name,현기)";
+	private static final String SEARCH_TERM = "김현";
+    private static final String EXPECTED_PREDICATE_STRING = "startsWith(user.name,김현)";
 
     @Test
     public void lastNameLike() {

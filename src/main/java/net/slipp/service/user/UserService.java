@@ -20,8 +20,12 @@ import com.google.common.collect.Lists;
 public class UserService {
 	private static Logger log = LoggerFactory.getLogger(UserService.class);
 	
-	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 	
 	public User join(User user) throws ExistedUserException {
 		log.debug("User : {}", user);
@@ -75,4 +79,5 @@ public class UserService {
 		log.debug("SIZE : {}", Lists.newArrayList(iterable).size());
 		return Lists.newArrayList(iterable);
 	}
+
 }
