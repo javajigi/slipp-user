@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import javax.naming.ConfigurationException;
 
 import net.slipp.domain.user.User;
+import net.slipp.exception.ExistedUserException;
+import net.slipp.exception.PasswordMismatchException;
 
 import org.junit.After;
 import org.junit.Before;

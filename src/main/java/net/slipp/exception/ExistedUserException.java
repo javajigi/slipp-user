@@ -1,4 +1,4 @@
-package net.slipp.service.user;
+package net.slipp.exception;
 
 public class ExistedUserException extends Exception {
 	private static final long serialVersionUID = -2161492654834321369L;

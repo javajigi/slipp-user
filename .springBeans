@@ -5,11 +5,9 @@
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
-	<enableImports><![CDATA[false]]></enableImports>
+	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>webapp/WEB-INF/spring/slippApp/slipp-user-service.xml</config>
-		<config>webapp/WEB-INF/spring/slippApp/slipp-user-model.xml</config>
-		<config>webapp/WEB-INF/spring/slippApp/slipp-user-servlet.xml</config>
+		<config>src/main/resources/infrastructure.xml</config>
 	</configs>
 	<configSets>
 	</configSets>
