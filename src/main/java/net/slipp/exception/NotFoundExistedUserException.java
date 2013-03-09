@@ -1,4 +1,4 @@
-package net.slipp.service.user;
+package net.slipp.exception;
 
 public class NotFoundExistedUserException extends Exception {
 	private static final long serialVersionUID = -8630727195769215691L;
