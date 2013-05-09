@@ -22,6 +22,12 @@ public class UserService {
 		userDao.insert(user);
 		return user;
 	}
+	
+	public User update(User user) throws SQLException {
+		UserDao userDao = new UserDao();
+		userDao.update(user);
+		return user;
+	}
 
 	public User login(String userId, String password) throws SQLException, PasswordMismatchException {
 		UserDao userDao = new UserDao();
