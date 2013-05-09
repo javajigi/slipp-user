@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class UserServiceTest {
 	@Test
-	public void 정상적으로_회원가입한다() throws Exception {
+	public void join_normal() throws Exception {
 		UserService userService = new UserService();
 		User user = new User("userId1", "password", "name", "javajigi@email.com");
 		User joinedUser = userService.join(user);
@@ -16,7 +16,7 @@ public class UserServiceTest {
 	}
 	
 	@Test(expected=ExistedUserException.class)
-	public void 이미_존재하는_사용자_아이디로_회원가입한다() throws Exception {
+	public void join_existed_user() throws Exception {
 		UserService userService = new UserService();
 		User user1 = new User("userId2", "password", "name", "javajigi@email.com");
 		User joinedUser = userService.join(user1);
@@ -27,7 +27,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void 사용자_조회() throws Exception {
+	public void findByUserId() throws Exception {
 		User user3 = new User("userId3", "password2", "name2", "javajigi@email.com2");
 		UserService userService = new UserService();
 		userService.join(user3);
@@ -36,7 +36,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void 로그인_성공() throws Exception {
+	public void login_success() throws Exception {
 		String userId = "admin";
 		String password = "password";
 		UserService userService = new UserService();
@@ -45,7 +45,7 @@ public class UserServiceTest {
 	}
 	
 	@Test(expected=PasswordMismatchException.class)
-	public void 로그인_비밀번호가_달라서_실패() throws Exception {
+	public void login_fail_password_mismath() throws Exception {
 		String userId = "admin";
 		String password = "password2";
 		UserService userService = new UserService();
@@ -53,7 +53,7 @@ public class UserServiceTest {
 	}
 	
 	@Test(expected=PasswordMismatchException.class)
-	public void 로그인_존재하지_않는_사용자라서_실패() throws Exception {
+	public void login_fail_doesnot_existed_user() throws Exception {
 		String userId = "dontexisted";
 		String password = "password2";
 		UserService userService = new UserService();
