@@ -11,18 +11,13 @@
 <body>
     <%@ include file="./commons/_top.jspf" %>
     
-	<header class="jumbotron subhead" id="overview">
-	<div class="container">
-		<h1>SLiPP</h1>
-		<p class="lead">Sustaninable Life, Programming, Programmer</p>
-	</div>
-	</header>     
-    
 	<div class="container">
 		<div class="container-fluid">
+			<h3></h3>
+			</div>		
 			<div class="row-fluid">
-				<div class="span6">
-					<h1>여기에다가 본문을 넣으세요.</h1>
+				<div class="span12">
+					<a href="/board/form.jsp"><button class="btn btn-primary pull-right" type="button">글쓰기</button></a>
 				</div>
 			</div>
 		</div>
