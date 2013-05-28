@@ -1,0 +1,5 @@
+1. TOMCAT_HOME/webapps 디렉토리의 ROOT를 삭제한다.
+2. target/slipp-user-1.0.0을 TOMCAT_HOME/webapps로 복사한다.
+3. TOMCAT_HOME/webapps의 slipp-user-1.0.0 디렉토리 이름을 ROOT로 변경한다.
+4. TOMCAT_HOME/bin/startup.bat, startup.sh를 실행한다.
+5. 브라우저에서 http://localhost:8080/로 접근한다.

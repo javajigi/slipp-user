@@ -1,0 +1,35 @@
+1. TOMCAT_HOME/conf/tomcat-users.xml 파일에 다음 내용을 추가한다.
+- Tomcat 7.0
+<tomcat-users>
+  <role rolename="manager-gui" />
+  <user username="admin" password="password" roles="manager-gui" />
+</tomcat-users>
+
+- Tomcat 6.0
+<tomcat-users>
+  <role rolename="manager" />
+  <user username="admin" password="password" roles="manager" />
+</tomcat-users>
+
+2. Tomcat 서버를 재시작한 후 http://localhost:8080/manager로 접속한다.
+- 앞에서 설정한 admin/password로 접근할 수 있다.
+
+3. settings.xml 파일을 USER_HOME/.m2 디렉토리에 복사한다.
+	<server>
+		<id>TomcatServer</id>
+		<username>admin</username>
+		<password>password</password>
+	</server>
+
+4. pom.xml 파일에 다음 내용을 추가한다.
+<plugin>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>tomcat-maven-plugin</artifactId>
+	<configuration>
+		<url>http://127.0.0.1:8080/manager</url>
+		<server>TomcatServer</server>
+		<path>/</path>
+	</configuration>
+</plugin>
+
+5. mvn tomcat:redeploy를 실행한다.
