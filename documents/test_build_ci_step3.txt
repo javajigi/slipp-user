@@ -1,24 +1,99 @@
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.12.4</version>
-				<configuration>
-					<includes>
-						<include>**/*AT.java</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>integration-test</id>
-						<goals>
-							<goal>integration-test</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>verify</id>
-						<goals>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+1. selenium 라이브러리 추가
+<dependency>
+	<groupId>org.seleniumhq.selenium</groupId>
+	<artifactId>selenium-java</artifactId>
+	<version>2.33.0</version>
+	<scope>test</scope>
+</dependency>
+
+2. 통합 테스트 추가한다.
+
+3. 통합 테스트 실
+3.1 단위 테스트와 통합 테스트를 분리해서 실행할 수 있도록 설정한다.
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-failsafe-plugin</artifactId>
+	<version>2.12.4</version>
+	<configuration>
+		<includes>
+			<include>**/*AT.java</include>
+		</includes>
+	</configuration>
+	<executions>
+		<execution>
+			<id>integration-test</id>
+			<goals>
+				<goal>integration-test</goal>
+			</goals>
+		</execution>
+		<execution>
+			<id>verify</id>
+			<goals>
+				<goal>verify</goal>
+			</goals>
+		</execution>
+	</executions>
+</plugin>
+3.2 맥의 경우 chromedriver가 실행 가능하도록 설정 추가한다.
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-antrun-plugin</artifactId>
+	<version>1.6</version>
+	<executions>
+		<execution>
+			<id>process-test-classes</id>
+			<phase>process-test-classes</phase>
+			<configuration>
+				<target>
+					<chmod file="target/test-classes/webdriver/chromedriver-mac"
+						perm="755" />
+				</target>
+			</configuration>
+			<goals>
+				<goal>run</goal>
+			</goals>
+		</execution>
+	</executions>
+</plugin>
+
+3.3 통합 테스트를 실행하기 전에 WAS를 실행하도록 한다.
+<plugin>
+	<groupId>org.mortbay.jetty</groupId>
+	<artifactId>maven-jetty-plugin</artifactId>
+	<configuration>
+		<webAppSourceDirectory>${basedir}/webapp</webAppSourceDirectory>
+		<contextPath>/</contextPath>
+		<scanIntervalSeconds>10</scanIntervalSeconds>
+		<connectors>
+			<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+				<port>8000</port>
+				<maxIdleTime>60000</maxIdleTime>
+			</connector>
+		</connectors>
+		<stopKey>slipp</stopKey>
+		<stopPort>9999</stopPort>
+	</configuration>
+	<executions>
+		<execution>
+			<id>start-jetty</id>
+			<phase>pre-integration-test</phase>
+			<goals>
+				<goal>run</goal>
+			</goals>
+			<configuration>
+				<scanIntervalSeconds>0</scanIntervalSeconds>
+				<daemon>true</daemon>
+			</configuration>
+		</execution>
+		<execution>
+			<id>stop-jetty</id>
+			<phase>post-integration-test</phase>
+			<goals>
+				<goal>stop</goal>
+			</goals>
+		</execution>
+	</executions>
+</plugin>
+3.4 테스트 및 배포
+mvn clean verify package tomcat7:redeploy
+
