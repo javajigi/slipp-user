@@ -1,5 +1,97 @@
-1. TOMCAT_HOME/webapps 디렉토리의 ROOT를 삭제한다.
-2. target/slipp-user-1.0.0을 TOMCAT_HOME/webapps로 복사한다.
-3. TOMCAT_HOME/webapps의 slipp-user-1.0.0 디렉토리 이름을 ROOT로 변경한다.
-4. TOMCAT_HOME/bin/startup.bat, startup.sh를 실행한다.
-5. 브라우저에서 http://localhost:8080/로 접근한다.
+1. 메이븐 eclipse 플러그인 설치
+2. 메이븐 플러그인 활용해 프로젝트 생성
+=> groupId, artifactId, packaing에 대한 개념 설명
+3. 메이븐 활용해 빌드
+=> 빌드 라이프 사이클 설명
+=> phase와 goal 관계 설명
+4. junit 의존성 라이브러리 추가
+=> 라이브러리 검색 사이트 접근해 junit 검색
+=> 라이브러리 3.8.1 추가
+=> 라이브러리 4.10으로 변경
+
+4.1 구글에서 maven repository로 검색. 
+4.2 http://mvnrepository.com 접근
+4.3 junit으로 검색. 의존성 전이 설명한다.
+<dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.9</version>
+</dependency>
+
+4.4 junit 버전을 4.11 업그레이드
+4.5 spring 프레임워크 의존성 추가 => org.springframework로 검색
+=> spring-jdbc와 spring-web 모듈 추가
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-jdbc</artifactId>
+	<version>3.2.3.RELEASE</version>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-web</artifactId>
+	<version>3.2.3.RELEASE</version>
+</dependency>
+4.6 공통 값을 변수로 추출
+<properties>
+	<org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+</properties>
+${org.springframework.version}로 변경한다.
+
+5. webapps 경로 변경
+5.1 src/main/webapps 디렉토리를 webapps로 이동한다.
+5.2 pom.xml에서 설정 변경한다.
+<plugin>
+	<artifactId>maven-war-plugin</artifactId>
+	<configuration>
+		<warSourceDirectory>webapp</warSourceDirectory>
+	</configuration>
+</plugin>
+
+6. wtp에 배포해 테스트하도록 설정
+6.1 eclipse 플러그인에 설정
+<plugin>
+	<artifactId>maven-eclipse-plugin</artifactId>
+	<version>2.6</version>
+	<configuration>
+		<wtpversion>2.0</wtpversion>
+		<wtpContextName>/</wtpContextName>
+	</configuration>
+</plugin>
+6.2 java compiler 에러 해결한다.
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-compiler-plugin</artifactId>
+	<version>2.3.2</version>
+	<configuration>
+		<source>1.6</source>
+		<target>1.6</target>
+		<encoding>utf-8</encoding>
+	</configuration>
+</plugin>
+6.3 wtp에 배포한다.
+6.4 jsp 생성한다. jsp 생성하기 전에 jsp 파일에 대한 인코딩을 utf-8로 설정한다.
+6.5 WEB-INF 디렉토리 및 web.xml 생성
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>SLiPP</display-name>
+   
+</web-app>
+
+6.6 jar 파일에 대한 소스 코드 다운로드 하도록 한다.
+<configuration>
+	<downloadSources>true</downloadSources>
+</configuration>
+
+7. package
+7.1 github에서 slipp-user clone한다.
+7.2 build_test_ci_step1 브랜치로 reset 한다.
+7.3 mvn clean package
+
+8. war 파일을 tomcat 서버에 수동 배포
+8.1. TOMCAT_HOME/webapps 디렉토리의 ROOT를 삭제한다.
+8.2. target/slipp-user-1.0.0을 TOMCAT_HOME/webapps로 복사한다.
+8.3. TOMCAT_HOME/webapps의 slipp-user-1.0.0 디렉토리 이름을 ROOT로 변경한다.
+8.4. TOMCAT_HOME/bin/startup.bat, startup.sh를 실행한다.
+8.5. 브라우저에서 http://localhost:8080/로 접근한다.

@@ -106,6 +106,16 @@
 					<warSourceDirectory>webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<url>http://localhost:8080/manager/text</url>
+					<server>my-server</server>
+					<path>/</path>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
