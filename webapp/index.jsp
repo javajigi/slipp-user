@@ -22,7 +22,7 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span6">
-					<h1>여기에다가 본문을 넣으세요.</h1>
+					<h1>와 행복하다. 이제 끝이다.</h1>
 				</div>
 			</div>
 		</div>
