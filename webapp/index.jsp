@@ -22,7 +22,7 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span6">
-					<h1>자동 배포 어디까지 가능할까?</h1>
+					<h1>또 한번의 배포 테스트</h1>
 				</div>
 			</div>
 		</div>
