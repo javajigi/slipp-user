@@ -9,7 +9,7 @@ public class UserTest {
 
 	@Test
 	public void 비밀번호_일치() {
-		User user = new User("userId", "passwor", "name", "javajigi@email.com");
+		User user = new User("userId", "password", "name", "javajigi@email.com");
 		assertThat(user.matchPassword("password"), is(true)); 
 	}
 	
