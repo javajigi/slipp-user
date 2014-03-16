@@ -22,7 +22,7 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span6">
-					<h1>지금은 넥스트 데모시간 .</h1>
+					<h1>NEXT 데모</h1>
 				</div>
 			</div>
 		</div>
