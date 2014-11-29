@@ -10,6 +10,6 @@ public class HomeAT extends AbstractBaseAT {
 	@Test
 	public void index() {
 		driver.get(DEFAULT_BASE_URL);
-		assertThat(driver.getTitle(), is("SLiPP demo"));
+		assertThat(driver.getTitle(), is("SLiPP"));
 	}
 }
