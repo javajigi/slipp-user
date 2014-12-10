@@ -22,7 +22,7 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span6">
-					<h1>여기는 메인 페이지</h1>
+					<h1>여기는 메인 페이지입니다.</h1>
 				</div>
 			</div>
 		</div>
