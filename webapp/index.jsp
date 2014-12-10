@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SLiPP test</title>
+<title>SLiPP</title>
 
 <%@ include file="./commons/_header.jspf" %>
 
