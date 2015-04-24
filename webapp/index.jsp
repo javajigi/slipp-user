@@ -22,7 +22,7 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span6">
-					<h1>SDS 배포 테스트</h1>
+					<h1>Fabric 배포 테스트</h1>
 				</div>
 			</div>
 		</div>
